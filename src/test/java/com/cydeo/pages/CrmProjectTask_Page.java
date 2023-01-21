@@ -152,4 +152,11 @@ public class CrmProjectTask_Page {
     @FindBy(tagName = "frame")
     public WebElement iframe;
 
+
+
+
+
+//    Checklist Verify
+    @FindBy(xpath = "//iframe[starts-with(@id,'iframe')]")
+    public WebElement IframeWebtable;
 }

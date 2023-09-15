@@ -11,13 +11,14 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.opera.OperaDriver;
+//import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -76,7 +77,7 @@ public class Driver {
     Creating a private constructor, so we are closing
     access to the object of this class from outside the class
      */
-    private Driver(){}
+    public Driver(){}
 
     /*
     We make WebDriver private, because we want to close access from outside the class.
@@ -124,7 +125,7 @@ public class Driver {
 
             switch (browserType.toLowerCase()){
                 case "chrome":
-                    WebDriverManager.chromedriver().setup();
+//                    WebDriverManager.chromedriver().setup();    // After Selenium 4 we don't need this line anymore
                     ChromeOptions chromeOptions = new ChromeOptions();
                     chromeOptions.addArguments("--lang=en-GB");
                     chromeOptions.addArguments("--disable-notifications");
@@ -145,7 +146,8 @@ public class Driver {
 //                    );
                     driverPool.set(new ChromeDriver(chromeOptions));
                     driverPool.get().manage().window().maximize();
-                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                    driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                     break;
 
                 case "chrome-locale":
@@ -172,7 +174,8 @@ public class Driver {
                     chromeOptions.merge(capabilitiesChrome);
                     driverPool.set(new ChromeDriver(chromeOptions));
                     driverPool.get().manage().window().maximize();
-                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                    driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                     break;
 
 //                DesiredCapabilities - a class that is used for Webdriver configuration.
@@ -188,7 +191,8 @@ public class Driver {
                         desiredCapabilities.setBrowserName("chrome");
                         driverPool.set(new RemoteWebDriver(url,desiredCapabilities));
                         driverPool.get().manage().window().maximize();
-                        driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                        driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//                        driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
                     }
@@ -206,7 +210,8 @@ public class Driver {
                         desiredCapabilities.setBrowserName("chrome");
                         driverPool.set(new RemoteWebDriver(url,desiredCapabilities));
                         driverPool.get().manage().window().maximize();
-                        driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                        driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//                        driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                     }catch (MalformedURLException e){
                         e.printStackTrace();
                     }
@@ -223,7 +228,8 @@ public class Driver {
                     firefoxProfile.setPreference("intl.accept_languages", "en-GB");
 
                     driverPool.get().manage().window().maximize();
-                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                    driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                     break;
 
                 case "firefox-private":
@@ -235,7 +241,8 @@ public class Driver {
                     optionsFirefox.merge(capabilitiesFirefox);
                     driverPool.set(new FirefoxDriver(optionsFirefox));
                     driverPool.get().manage().window().maximize();
-                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                    driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                     break;
 
                 case "remote-firefox":
@@ -247,7 +254,8 @@ public class Driver {
                         desiredCapabilities.setBrowserName("firefox");
                         driverPool.set(new RemoteWebDriver(url,desiredCapabilities));
                         driverPool.get().manage().window().maximize();
-                        driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                        driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//                        driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
                     }
@@ -265,7 +273,8 @@ public class Driver {
                     WebDriverManager.safaridriver().setup();
                     driverPool.set(new SafariDriver());
                     driverPool.get().manage().window().maximize();
-                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                    driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                     break;
 
                 case "ie":
@@ -275,7 +284,8 @@ public class Driver {
                     WebDriverManager.iedriver().setup();
                     driverPool.set(new InternetExplorerDriver());
                     driverPool.get().manage().window().maximize();
-                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                    driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                     break;
 
                 case "edge":
@@ -285,7 +295,8 @@ public class Driver {
                     WebDriverManager.edgedriver().setup();
                     driverPool.set(new EdgeDriver());
                     driverPool.get().manage().window().maximize();
-                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                    driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                     break;
 
                 case "saucelab-edge":
@@ -302,18 +313,19 @@ public class Driver {
                         url = new URL("https://oauth-sdetoscar-844c8:66e7117f-390e-4556-8105-07af96a01f7a@ondemand.eu-central-1.saucelabs.com:443/wd/hub");
                         driverPool.set(new RemoteWebDriver(url,browserOptions));
                         driverPool.get().manage().window().maximize();
-                        driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                        driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//                        driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
                     }
                     break;
-
-                case "opera":
-                    WebDriverManager.operadriver().setup();
-                    driverPool.set(new OperaDriver());
-                    driverPool.get().manage().window().maximize();
-                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-                    break;
+//
+//                case "opera":
+//                    WebDriverManager.operadriver().setup();
+//                    driverPool.set(new OperaDriver());
+//                    driverPool.get().manage().window().maximize();
+//                    driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//                    break;
 
             }
 

@@ -91,7 +91,7 @@ public class CrmProjectTask_Page {
     @FindBy(xpath = "//a[@class='bx-calendar-top-year']")
     public WebElement deadlineYear;
 
-    @FindBy(xpath = "//span[@data-bx-year='2023']")
+    @FindBy(xpath = "//span[@data-bx-year='2026']")
     public WebElement selectYear;
 
     @FindBy(xpath = "//a[@class='bx-calendar-top-month']")

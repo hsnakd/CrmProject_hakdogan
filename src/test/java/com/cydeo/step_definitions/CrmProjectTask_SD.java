@@ -252,7 +252,7 @@ public class CrmProjectTask_SD {
 //
 //        BrowserUtils.waitFor(5);
 //
-//        String expectedText = "05/03/2023 07:00 pm";
+//        String expectedText = "05/03/2026 07:00 pm";
 //        String actualText = taskPage.checkDeadline.getText();
 //        BrowserUtils.waitFor(5);
 //
@@ -280,7 +280,7 @@ public class CrmProjectTask_SD {
 //                iframeNum = i;
 //                System.out.println("iframeNum = " + iframeNum);
 //
-//                String expectedText = "05/03/2023 07:00 pm";
+//                String expectedText = "05/03/2026 07:00 pm";
 //                String actualText = taskPage.checkDeadline.getText();
 //
 //                Assert.assertEquals(expectedText, actualText);
@@ -294,14 +294,14 @@ public class CrmProjectTask_SD {
 
     @Then("Verify that while creating a task deadline is added")
     public void verifyThatWhileCreatingATaskDeadlineIsAdded() {
-        Driver.getDriver().navigate().refresh();
+    //    Driver.getDriver().navigate().refresh();
 
         BrowserUtils.waitForClickability(taskPage.deadlineTask,20);
         taskPage.deadlineTask.click();
 
         Driver.getDriver().switchTo().frame(taskPage.IframeWebtable);
 
-        String expectedText = "05/03/2023 07:00 pm";
+        String expectedText = "05/03/2026 07:00 pm";
         String actualText = taskPage.checkDeadline.getText();
 
         Assert.assertEquals(expectedText, actualText);
@@ -384,12 +384,12 @@ public class CrmProjectTask_SD {
 //            // Switch to each frame
 //            Driver.getDriver().switchTo().frame(i);
 //            // Check for the web element
-//            List<WebElement> elements = Driver.getDriver().findElements(By.xpath("//*[text()='05/03/2023 09:00 am']"));
+//            List<WebElement> elements = Driver.getDriver().findElements(By.xpath("//*[text()='05/03/2026 09:00 am']"));
 //            if (elements.size() > 0){
 //                iframeNum = i;
 //                System.out.println("iframeNum = " + iframeNum);
 //
-//                String expectedText = "05/03/2023 09:00 am";
+//                String expectedText = "05/03/2026 09:00 am";
 //                String actualText = taskPage.checkStartTimePlanningAdded.getText();
 ////                System.out.println("taskPage.checkStartTimePlanningAdded.getText() = " + taskPage.checkStartTimePlanningAdded.getText());
 //                Assert.assertEquals(expectedText, actualText);
@@ -409,7 +409,7 @@ public class CrmProjectTask_SD {
 
         Driver.getDriver().switchTo().frame(taskPage.IframeWebtable);
 
-        String expectedText = "05/03/2023 09:00 am";
+        String expectedText = "05/03/2026 09:00 am";
         String actualText = taskPage.checkStartTimePlanningAdded.getText();
         Assert.assertEquals(expectedText, actualText);
 

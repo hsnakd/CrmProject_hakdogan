@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -62,6 +63,10 @@ for given duration
 
         Assert.assertEquals(Driver.getDriver().getTitle(), expectedTitle);
 
+    }
+
+    public static void verifyTitleContains(WebDriver driver, String expectedInTitle){
+        Assert.assertTrue(Driver.getDriver().getTitle().contains(expectedInTitle));
     }
 
     /**
@@ -190,7 +195,7 @@ for given duration
      * @return
      */
     public static WebElement waitForVisibility(WebElement element, int timeToWaitInSec) {
-        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), timeToWaitInSec);
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(timeToWaitInSec));
         return wait.until(ExpectedConditions.visibilityOf(element));
     }
 
@@ -202,8 +207,34 @@ for given duration
      * @return
      */
     public static WebElement waitForVisibility(By locator, int timeout) {
-        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), timeout);
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(timeout));
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
+
+    /*
+    This method accepts WebElement target,
+    and waits for that WebElement not to be displayed on the page
+     */
+    public static void waitForInvisibilityOf(WebElement target, int timeout){
+        //Create the object of 'WebDriverWait' class, and set up the constructor args
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(timeout));
+
+        //use the 'wait' object with the proper syntax to create explicit wait conditions.
+        wait.until(ExpectedConditions.invisibilityOf(target));
+    }
+
+
+    /*
+    This method accepts String title,
+    and waits for that Title to contain given String value.
+     */
+    public static void waitForTitleContains(String title, int timeout){
+        //Create the object of 'WebDriverWait' class, and set up the constructor args
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(timeout));
+
+        //use the 'wait' object with the proper syntax to create explicit wait conditions.
+        wait.until(ExpectedConditions.titleContains(title));
     }
 
     /**
@@ -214,7 +245,7 @@ for given duration
      * @return
      */
     public static WebElement waitForClickability(WebElement element, int timeout) {
-        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), timeout);
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(timeout));
         return wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
@@ -226,7 +257,7 @@ for given duration
      * @return
      */
     public static WebElement waitForClickability(By locator, int timeout) {
-        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), timeout);
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(timeout));
         return wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
 
@@ -242,7 +273,7 @@ for given duration
             }
         };
         try {
-            WebDriverWait wait = new WebDriverWait(Driver.getDriver(), timeOutInSeconds);
+            WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(timeOutInSeconds));
             wait.until(expectation);
         } catch (Throwable error) {
             error.printStackTrace();
@@ -346,6 +377,13 @@ for given duration
     public static void scrollToElement(WebElement element) {
         ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
     }
+
+
+    public static void scrollDown(int pixels) {
+        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
+        js.executeScript("window.scrollBy(0, "+ pixels +")");
+    }
+
 
     /**
      * Performs double click action on an element
@@ -468,7 +506,7 @@ for given duration
      * @param time
      */
     public static void waitForPresenceOfElement(By by, long time) {
-        new WebDriverWait(Driver.getDriver(), time).until(ExpectedConditions.presenceOfElementLocated(by));
+        new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(time)).until(ExpectedConditions.presenceOfElementLocated(by));
     }
 
 /**

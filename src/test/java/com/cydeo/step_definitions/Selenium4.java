@@ -128,4 +128,51 @@ public class Selenium4 {
 
 
     }
+
+
+    @Then("createDownloadFolder")
+    public void createdownloadfolder() {
+        BrowserUtils.createFolder();
+    }
+
+    @Then("deleteDownloadFolder")
+    public void deletedownloadfolder() {
+        BrowserUtils.deleteFolder();
+    }
+
+    @Then("countFilesInDownloadFolder")
+    public void countfilesindownloadfolder() {
+        BrowserUtils.countFilesInFolder();
+    }
+
+    @Then("createFolder {string}")
+    public void createfolder(String folderName) {
+        BrowserUtils.createFolder(folderName);
+
+    }
+
+    @Then("countFilesIn {string}")
+    public void countfilesin(String folderName) {
+        BrowserUtils.countFilesInFolder(folderName);
+    }
+
+    @Then("delete {string}")
+    public void delete(String folderName) {
+        BrowserUtils.deleteFolder(folderName);
+    }
+
+    @Then("createCountDelete {string}")
+    public void createcountdelete(String folderName) {
+        BrowserUtils.createFolder(folderName);
+        BrowserUtils.countFilesInFolder(folderName);
+        BrowserUtils.deleteFolder(folderName);
+
+    }
+
+    @Then("createCountDeleteDownloadFolder")
+    public void createcountdeletedownloadfolder() {
+        BrowserUtils.createFolder();
+        BrowserUtils.countFilesInFolder();
+        BrowserUtils.deleteFolder();
+    }
 }

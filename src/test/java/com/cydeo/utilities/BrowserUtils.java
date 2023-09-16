@@ -848,6 +848,138 @@ for given duration
     }
 
 
+    // Method to create a folder
+    public static void createFolder() {
+        String folderPath = "src/test/java/com/cydeo/Download";
+        File folder = new File(folderPath);
+
+        if (!folder.exists()) {
+            boolean folderCreated = folder.mkdirs();
+            if (folderCreated) {
+                System.out.println("Download folder created at: " + folder.getAbsolutePath());
+            } else {
+                System.err.println("Failed to create download folder.");
+            }
+        } else {
+            System.out.println("Download folder already exists at: " + folder.getAbsolutePath());
+        }
+    }
+
+
+
+    // Method to create a folder
+    public static void createFolder(String folderName) {
+        String folderPath = "src/test/java/com/cydeo/" + folderName;
+        File folder = new File(folderPath);
+
+        if (!folder.exists()) {
+            boolean folderCreated = folder.mkdirs();
+            if (folderCreated) {
+                System.out.println(folderName + " folder created at: " + folder.getAbsolutePath());
+            } else {
+                System.err.println("Failed to create " + folderName + " folder.");
+            }
+        } else {
+            System.out.println(folderName + " folder already exists at: " + folder.getAbsolutePath());
+        }
+    }
+
+
+
+    // Method to delete a folder
+    public static void deleteFolder() {
+        String folderPath = "src/test/java/com/cydeo/Download";
+        File folder = new File(folderPath);
+
+        if (folder.exists()) {
+            boolean folderDeleted = delete_Folder(folder);
+            if (folderDeleted) {
+                System.out.println("Download folder deleted.");
+            } else {
+                System.err.println("Failed to delete download folder.");
+            }
+        } else {
+            System.out.println("Download folder does not exist.");
+        }
+    }
+
+
+
+    // Method to delete a folder
+    public static void deleteFolder(String folderName) {
+        String folderPath = "src/test/java/com/cydeo/" + folderName;
+        File folder = new File(folderPath);
+
+        if (folder.exists()) {
+            boolean folderDeleted = delete_Folder(folder);
+            if (folderDeleted) {
+                System.out.println(folderName + " folder deleted.");
+            } else {
+                System.err.println("Failed to delete " + folderName + " folder.");
+            }
+        } else {
+            System.out.println(folderName + " folder does not exist.");
+        }
+    }
+
+
+    // Recursive method to delete a folder and its contents
+    private static boolean delete_Folder(File folder) {
+        if (folder.isDirectory()) {
+            File[] files = folder.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if (file.isDirectory()) {
+                        deleteFolder(String.valueOf(file));
+                    } else {
+                        if (!file.delete()) {
+                            System.err.println("Failed to delete file: " + file.getAbsolutePath());
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return folder.delete();
+    }
+
+    // Method to count the number of files in a folder
+    public static int countFilesInFolder() {
+        String folderPath = "src/test/java/com/cydeo/Download";
+        File folder = new File(folderPath);
+
+        if (folder.exists() && folder.isDirectory()) {
+            File[] files = folder.listFiles();
+            if (files != null) {
+                int numberOfFiles =  files.length;
+                System.out.println("Number of files in the download folder: " + numberOfFiles);
+                return numberOfFiles;
+            }
+        }
+        // If the folder doesn't exist or is empty, return 0
+        return 0;
+    }
+
+
+
+    // Method to count the number of files in a folder
+    public static int countFilesInFolder(String folderName) {
+        String folderPath = "src/test/java/com/cydeo/" + folderName;
+        File folder = new File(folderPath);
+
+        if (folder.exists() && folder.isDirectory()) {
+            File[] files = folder.listFiles();
+            if (files != null) {
+                int numberOfFiles =  files.length;
+                System.out.println("Number of files in the " + folderName + " folder: " + numberOfFiles);
+                return numberOfFiles;
+            }
+        }
+        // If the folder doesn't exist or is empty, return 0
+        return 0;
+    }
+
+
 
 
 

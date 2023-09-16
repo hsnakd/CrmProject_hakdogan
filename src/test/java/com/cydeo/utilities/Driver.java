@@ -12,6 +12,8 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 //import org.openqa.selenium.opera.OperaDriver;
+import org.openqa.selenium.opera.OperaDriver;
+import org.openqa.selenium.opera.OperaOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
@@ -92,7 +94,7 @@ public class Driver {
      */
     public static WebDriver getDriver(){
 
-        if (driverPool.get() == null){
+        if (driverPool.get() == null){   // if driver/browser was never opened
 
             /*
             We read our browserType from configuration.properties.
@@ -151,7 +153,7 @@ public class Driver {
                     break;
 
                 case "chrome-locale":
-                    WebDriverManager.chromedriver().setup();
+//                    WebDriverManager.chromedriver().setup();            // After Selenium 4 we don't need this line anymore
                     chromeOptions = new ChromeOptions();
                     Map<String, Object> prefs = new HashMap<>();
                     chromeOptions.addArguments("--disable-notifications");
@@ -163,7 +165,7 @@ public class Driver {
                     break;
 
                 case "chrome-incognito":
-                    WebDriverManager.chromedriver().setup();
+//                    WebDriverManager.chromedriver().setup();            // After Selenium 4 we don't need this line anymore
 //                    ChromeOptions chromeOptions = new ChromeOptions();
                     chromeOptions = new ChromeOptions();
                     chromeOptions.addArguments("--incognito");  // ChromeOptions for starting chrome in incognito mode
@@ -199,7 +201,7 @@ public class Driver {
                     break;
 
                 case "chrome-headless":
-                    WebDriverManager.chromedriver().setup();
+//                    WebDriverManager.chromedriver().setup();            // After Selenium 4 we don't need this line anymore
                     driverPool.set(new ChromeDriver(new ChromeOptions().setHeadless(true)));
                     break;
 
@@ -219,7 +221,7 @@ public class Driver {
 
                 case "firefox":
 
-                    WebDriverManager.firefoxdriver().setup();
+//                    WebDriverManager.firefoxdriver().setup();            // After Selenium 4 we don't need this line anymore
                     driverPool.set(new FirefoxDriver());
 
                     FirefoxOptions optionsFirefox = new FirefoxOptions();
@@ -233,7 +235,7 @@ public class Driver {
                     break;
 
                 case "firefox-private":
-                    WebDriverManager.firefoxdriver().setup();
+//                    WebDriverManager.firefoxdriver().setup();            // After Selenium 4 we don't need this line anymore
                     optionsFirefox = new FirefoxOptions();
                     optionsFirefox.addArguments("-private");  // FirefoxOptions for starting firefox in incognito mode
                     DesiredCapabilities capabilitiesFirefox = new DesiredCapabilities();
@@ -262,7 +264,7 @@ public class Driver {
                     break;
 
                 case "firefox-headless":
-                    WebDriverManager.firefoxdriver().setup();
+//                    WebDriverManager.firefoxdriver().setup();            // After Selenium 4 we don't need this line anymore
                     driverPool.set(new FirefoxDriver(new FirefoxOptions().setHeadless(true)));
                     break;
 
@@ -270,7 +272,7 @@ public class Driver {
                     if (System.getProperty("os.name").toLowerCase().contains("windows")) {
                         throw new WebDriverException("Your operating system does not support the SAFARI browser");
                     }
-                    WebDriverManager.safaridriver().setup();
+//                    WebDriverManager.safaridriver().setup();            // After Selenium 4 we don't need this line anymore
                     driverPool.set(new SafariDriver());
                     driverPool.get().manage().window().maximize();
                     driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
@@ -281,7 +283,7 @@ public class Driver {
                     if (System.getProperty("os.name").toLowerCase().contains("mac")) {
                         throw new WebDriverException("Your operating system does not support the IE browser");
                     }
-                    WebDriverManager.iedriver().setup();
+//                    WebDriverManager.iedriver().setup();            // After Selenium 4 we don't need this line anymore
                     driverPool.set(new InternetExplorerDriver());
                     driverPool.get().manage().window().maximize();
                     driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
@@ -292,7 +294,7 @@ public class Driver {
                     if (System.getProperty("os.name").toLowerCase().contains("mac")) {
                         throw new WebDriverException("Your operating system does not support the EDGE browser");
                     }
-                    WebDriverManager.edgedriver().setup();
+//                    WebDriverManager.edgedriver().setup();            // After Selenium 4 we don't need this line anymore
                     driverPool.set(new EdgeDriver());
                     driverPool.get().manage().window().maximize();
                     driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
@@ -319,18 +321,29 @@ public class Driver {
                         e.printStackTrace();
                     }
                     break;
-//
+
+                case "opera":
+//                    WebDriverManager.operadriver().setup();            // After Selenium 4 we don't need this line anymore
+                    driverPool.set(new OperaDriver());
+                    driverPool.get().manage().window().maximize();
+                    driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+                    break;
+
 //                case "opera":
 //                    WebDriverManager.operadriver().setup();
-//                    driverPool.set(new OperaDriver());
+//                    OperaOptions operaOptions = new OperaOptions();
+//                    // You can add specific OperaOptions here if needed
+//                    driverPool.set(new OperaDriver(operaOptions));
 //                    driverPool.get().manage().window().maximize();
 //                    driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 //                    break;
+
 
             }
 
         }
 
+        // Same driver instance will be returned every time we call Driver.getDriver() method
         return driverPool.get();
 
     }

@@ -14,12 +14,11 @@ public class selenium4 {
     }
 
 
-
-
     @FindBy(name = "q")
     public WebElement googleSearchBox;
 
     @FindBy(xpath = "//*[@id=\"gb\"]/div/div[1]/div/div[2]/a")
     public WebElement imageLink;
+
 
 }

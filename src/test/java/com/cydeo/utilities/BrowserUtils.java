@@ -1,18 +1,27 @@
 package com.cydeo.utilities;
 
 import com.cydeo.pages.CrmProjectTask_Page;
+import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.remote.LocalFileDetector;
+import org.openqa.selenium.remote.RemoteWebElement;
+import org.openqa.selenium.support.ui.*;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import java.util.concurrent.TimeUnit;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 public class BrowserUtils {
 
@@ -29,7 +38,7 @@ for given duration
         }
     }
 
-    /*
+    /**
     This method accepts 3 arguments.
     Arg1: webdriver
     Arg2: expectedInUrl : for verify if the url contains given String.
@@ -56,7 +65,7 @@ for given duration
         Assert.assertTrue(actualTitle.contains(expectedInTitle));
     }
 
-    /*
+    /**
     This method accepts a String "expectedTitle" and Asserts if it is true
      */
     public static void verifyTitle(String expectedTitle){
@@ -379,12 +388,6 @@ for given duration
     }
 
 
-    public static void scrollDown(int pixels) {
-        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
-        js.executeScript("window.scrollBy(0, "+ pixels +")");
-    }
-
-
     /**
      * Performs double click action on an element
      *
@@ -406,7 +409,7 @@ for given duration
     }
 
     /**
-     * Highlighs an element by changing its background and border color
+     * Highlights an element by changing its background and border color
      * @param element
      */
     public static void highlight(WebElement element) {
@@ -579,9 +582,275 @@ for given duration
                 }
             }
         }
-//        System.out.println("returned element succesfully");
+//        System.out.println("returned element successfully");
         return frameNumber;
     }
+
+
+
+    /**
+     * Accepts a JavaScript alert.
+     */
+    public static void acceptAlert() {
+        Alert alert = Driver.getDriver().switchTo().alert();
+        alert.accept();
+    }
+
+    /**
+     * Dismisses a JavaScript alert.
+     */
+    public static void dismissAlert() {
+        Alert alert = Driver.getDriver().switchTo().alert();
+        alert.dismiss();
+    }
+
+    /**
+     * Sends text to a JavaScript alert.
+     *
+     * @param text Text to send to the alert.
+     */
+    public static void sendTextToAlert(String text) {
+        Alert alert = Driver.getDriver().switchTo().alert();
+        alert.sendKeys(text);
+    }
+
+    // Get the text from an alert
+    public static String getAlertText() {
+        Alert alert = Driver.getDriver().switchTo().alert();
+        return alert.getText();
+    }
+
+
+    /**
+     * Capture a screenshot of the current browser window.
+     *
+     * @param filePath The file path to save the screenshot.
+     */
+    public static void captureScreenshot(String filePath) {
+        WebDriver driver = Driver.getDriver();
+        if (driver instanceof TakesScreenshot) {
+            File screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+            try {
+                FileUtils.copyFile(screenshotFile, new File(filePath));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Scroll down the page by a specified number of pixels.
+     *
+     * @param pixels Number of pixels to scroll down.
+     */
+    public static void scrollDown(int pixels) {
+        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
+        js.executeScript("window.scrollBy(0, " + pixels + ")");
+    }
+
+    /**
+     * Simulate pressing a key on the keyboard.
+     *
+     * @param key The key to press (e.g., Keys.ENTER, Keys.TAB).
+     */
+    public static void pressKey(Keys key) {
+        Actions actions = new Actions(Driver.getDriver());
+        actions.sendKeys(key).perform();
+    }
+
+    /**
+     * Navigate forward in the browser's history.
+     */
+    public static void navigateForward() {
+        Driver.getDriver().navigate().forward();
+    }
+
+    /**
+     * Navigate backward in the browser's history.
+     */
+    public static void navigateBackward() {
+        Driver.getDriver().navigate().back();
+    }
+
+    /**
+     * Navigate to a specific URL.
+     *
+     * @param url The URL to navigate to.
+     */
+    public static void navigateToURL(String url) {
+        Driver.getDriver().navigate().to(url);
+    }
+
+    /**
+     * Add a new browser cookie.
+     *
+     * @param name  The name of the cookie.
+     * @param value The value of the cookie.
+     */
+    public static void addCookie(String name, String value) {
+        Cookie cookie = new Cookie.Builder(name, value)
+                .domain("example.com") // Specify the domain
+                .build();
+        Driver.getDriver().manage().addCookie(cookie);
+    }
+
+    /**
+     * Delete a browser cookie by name.
+     *
+     * @param name The name of the cookie to delete.
+     */
+    public static void deleteCookie(String name) {
+        Driver.getDriver().manage().deleteCookieNamed(name);
+    }
+
+    /**
+     * Get all window handles and switch to a specific window by its title.
+     *
+     * @param windowTitle The title of the window to switch to.
+     */
+    public static void switchToWindowByTitle(String windowTitle) {
+        WebDriver driver = Driver.getDriver();
+        Set<String> allWindowHandles = driver.getWindowHandles();
+
+        for (String windowHandle : allWindowHandles) {
+            driver.switchTo().window(windowHandle);
+            if (driver.getTitle().equals(windowTitle)) {
+                break;
+            }
+        }
+    }
+
+
+    /**
+     * Uploads a file to an input element using its local file path.
+     *
+     * @param fileInput   The WebElement representing the file input field.
+     * @param filePath    The local file path of the file to upload.
+     */
+
+    public static void uploadFile(WebElement fileInput, String filePath) {
+        WebDriver driver = Driver.getDriver();
+        ((RemoteWebElement) fileInput).setFileDetector(new LocalFileDetector());
+        fileInput.sendKeys(filePath);
+    }
+
+
+
+
+    /**
+     * Downloads a file from a given URL and saves it to the specified local path.
+     *
+     * @param fileURL     The URL of the file to download.
+     * @param localPath   The local file path where the downloaded file should be saved.
+     */
+
+    public static void downloadFile(String fileURL, String localPath) {
+        WebDriver driver = Driver.getDriver();
+
+        // Create an instance of Actions class
+        Actions actions = new Actions(driver);
+
+        // Use contextClick method to perform right-click action
+        actions.contextClick(driver.findElement(By.linkText(fileURL))).build().perform();
+
+        // Press the 'v' key on the keyboard to open the "Save Link As" dialog on Mac
+        actions.sendKeys("v").build().perform();
+
+        // Wait for the "Save As" dialog to appear
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.name("Save As")));
+
+        // Set the file name and location in the dialog and press Enter
+        WebElement fileNameInput = Driver.getDriver().findElement(By.name("Save As"));
+        fileNameInput.clear();
+        fileNameInput.sendKeys(localPath);
+        actions.sendKeys("\n").build().perform();
+    }
+
+    /**
+     * Add a new browser cookie.
+     *
+     * @param name  The name of the cookie.
+     * @param value The value of the cookie.
+     * @param domain The domain of the cookie.
+     */
+    public static void addCookie(String name, String value, String domain) {
+        Cookie cookie = new Cookie.Builder(name, value)
+                .domain(domain)
+                .build();
+        Driver.getDriver().manage().addCookie(cookie);
+    }
+
+
+    /**
+     * Open a new browser tab with a specific URL.
+     *
+     * @param url The URL to open in the new tab.
+     */
+    public static void openNewTab(String url) {
+        ((JavascriptExecutor) Driver.getDriver()).executeScript("window.open('" + url + "','_blank');");
+    }
+
+    /**
+     * Perform a drag-and-drop action from the source element to the target element.
+     *
+     * @param sourceElement The source element to drag.
+     * @param targetElement The target element to drop onto.
+     */
+    public static void dragAndDrop(WebElement sourceElement, WebElement targetElement) {
+        Actions actions = new Actions(Driver.getDriver());
+        actions.dragAndDrop(sourceElement, targetElement).build().perform();
+    }
+
+
+    /**
+     * Switch to a specific iframe by index.
+     *
+     * @param index The index of the iframe to switch to.
+     */
+    public static void switchToIFrame(int index) {
+        Driver.getDriver().switchTo().frame(index);
+    }
+
+    // Switch to a frame by its WebElement
+    public static void switchToIFrame(WebElement frameElement) {
+        Driver.getDriver().switchTo().frame(frameElement);
+    }
+
+
+    /**
+     * Switch back to the main content from an iframe.
+     */
+    public static void switchToMainContent() {
+        Driver.getDriver().switchTo().defaultContent();
+    }
+
+    // Highlight an element by changing its border color
+    public static void highlightElement(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
+        js.executeScript("arguments[0].style.border='2px solid red'", element);
+    }
+
+
+    // Switch to a specific window or tab by its handle
+    public static void switchToWindowByHandle(String windowHandle) {
+        Driver.getDriver().switchTo().window(windowHandle);
+    }
+
+    // Open a new tab and switch to it
+    public static void openNewTab() {
+        Driver.getDriver().findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "t");
+    }
+
+    // Close the current tab or window
+    public static void closeCurrentTab() {
+        Driver.getDriver().close();
+    }
+
+
+
+
+
 }
 
 

@@ -106,6 +106,12 @@ Feature: Quick Navigate Menu Task feature
     Then TakeScreenShots and save as "HsnAkd"
 
 
+# 10. deleteScreenshot
+  @deleteScreenshot
+  Scenario:   deleteScreenshot
+    Then deleteScreenshot and save as "HsnAkd_20230924_1947.png"
+
+
 
 
   Scenario: Download a PDF file from a website

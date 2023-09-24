@@ -232,5 +232,10 @@ public class Selenium4 {
         BrowserUtils.takeScreenshot(Driver.getDriver(), saveAs);
 
     }
+
+    @Then("deleteScreenshot and save as {string}")
+    public void deletescreenshotAndSaveAs(String fileName) {
+        BrowserUtils.deleteScreenshot(fileName);
+    }
 }
 

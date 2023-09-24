@@ -879,7 +879,7 @@ for given duration
     /***
      * This method takes screenshots
      */
-
+    private static final String screenshotDir = "src/test/resources/Files/ScreenShots/";
 
     public static void takeScreenshot(WebDriver driver, String saveAs) {
         try {
@@ -894,10 +894,10 @@ for given duration
             File screenshotFile = ts.getScreenshotAs(OutputType.FILE);
 
             // Define the destination directory
-            String screenshotDir = "src/test/resources/Files/ScreenShots/";
+//            String screenshotDir = "src/test/resources/Files/ScreenShots/";
 
             // Create the directory if it doesn't exist
-            File directory = new File(screenshotDir);
+            File directory = new File(screenshotDir);  // line 882
             if (!directory.exists()) {
                 directory.mkdirs();
             }
@@ -916,6 +916,27 @@ for given duration
         }
     }
 
+
+
+
+    // Your other utility methods here...
+
+    /**
+     * Deletes a screenshot file in the specified screenshot directory.
+     *
+     * @param fileName The name of the screenshot file to delete (excluding the directory path).
+     */
+    public static void deleteScreenshot(String fileName) {
+//        Define the destination directory
+//        String screenshotDir = "src/test/resources/Files/ScreenShots/";
+        String filePath = screenshotDir + fileName;
+        File screenshotFile = new File(filePath);
+
+        if (screenshotFile.exists() && screenshotFile.isFile()) {
+            screenshotFile.delete();
+        }
+
+    }
 
 
     /**

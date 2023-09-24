@@ -51,7 +51,6 @@ Feature: Quick Navigate Menu Task feature
     Then createFolder "HsnAkd"
 
 
-
 # 6-1. countFilesInDownloadFolder
   @countFilesInDownloadFolder
   Scenario:   countFilesInDownloadFolder
@@ -87,3 +86,29 @@ Feature: Quick Navigate Menu Task feature
   Scenario:   createCountDeleteFolderName
     Then createCountDelete "HsnAkd"
 
+
+
+# 9-1. cleanDownloadFolder
+  @cleanDownloadFolder
+  Scenario:   cleanDownloadFolder
+    Then cleanDownloadFolder
+
+
+# 9-2. cleanFolderName
+  @cleanFolderName
+  Scenario:   cleanFolderName
+    Then clean "HsnAkd" Folder
+
+
+# 10. TakeScreenShots
+  @TakeScreenShots
+  Scenario:   TakeScreenShots
+    Then TakeScreenShots and save as "HsnAkd"
+
+
+
+
+  Scenario: Download a PDF file from a website
+    Given I am on the website
+    When I click on the PDF download link
+    Then the PDF file should be downloaded successfully

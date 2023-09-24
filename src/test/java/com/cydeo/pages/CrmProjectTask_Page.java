@@ -159,4 +159,8 @@ public class CrmProjectTask_Page {
 //    Checklist Verify
     @FindBy(xpath = "//iframe[starts-with(@id,'iframe')]")
     public WebElement IframeWebtable;
+
+
+    @FindBy(xpath = "//*[@data-tooltip=\"Download\"]")
+    public WebElement downloadLink;
 }

@@ -11,9 +11,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
-//import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.opera.OperaDriver;
-import org.openqa.selenium.opera.OperaOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
@@ -23,9 +21,13 @@ import java.net.URL;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Driver {
+//    Making our 'driver' instance private, so that it is not reachable from outside any class
+
+
 //  How do we change our Driver to handle multi-threads?
 //      #1- Driver.getDriver() method name stays same.
 //      #2- We wrap our "driver" instance with InheritableThreadLocal
@@ -50,6 +52,7 @@ public class Driver {
 //      - Even if we run our features in parallel, every thread using WebDriver instance will be Singleton in itself.
 
 
+//We make it static, because we want it to run before anything else, also we will use it in static method
     public static WebDriver environmentMethod(String environment){
 //        Change environment within maven command for test execution
 
@@ -120,10 +123,9 @@ public class Driver {
             }
             System.out.println("Browser Type : " + browserType);
 
-            /*
-                Depending on the browserType that will be return from configuration.properties file
-                switch statement will determine the case, and open the matching browser
-            */
+/*
+            Depending on the browserType that will be return from configuration.properties file switch statement will determine the case, and open the matching browser
+*/
 
             switch (browserType.toLowerCase()){
                 case "chrome":
@@ -161,19 +163,21 @@ public class Driver {
                     chromeOptions.setExperimentalOption("prefs", prefs);
                     driverPool.set(new ChromeDriver(chromeOptions));
                     driverPool.get().manage().window().maximize();
-                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                    driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
                     break;
 
                 case "chrome-incognito":
 //                    WebDriverManager.chromedriver().setup();            // After Selenium 4 we don't need this line anymore
-//                    ChromeOptions chromeOptions = new ChromeOptions();
+//                    chromeOptions = new ChromeOptions();
                     chromeOptions = new ChromeOptions();
                     chromeOptions.addArguments("--incognito");  // ChromeOptions for starting chrome in incognito mode
                     chromeOptions.addArguments("--disable-notifications");
                     chromeOptions.addArguments("--lang=en-GB");
-                    DesiredCapabilities capabilitiesChrome = new DesiredCapabilities();
-                    capabilitiesChrome.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
-                    chromeOptions.merge(capabilitiesChrome);
+//                    DesiredCapabilities capabilitiesChrome = new DesiredCapabilities();
+//                    capabilitiesChrome.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+                    chromeOptions.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+                    chromeOptions.merge(chromeOptions);
+//                    chromeOptions.merge(capabilitiesChrome);
                     driverPool.set(new ChromeDriver(chromeOptions));
                     driverPool.get().manage().window().maximize();
                     driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
@@ -200,9 +204,16 @@ public class Driver {
                     }
                     break;
 
+//                case "chrome-headless":
+////                    WebDriverManager.chromedriver().setup();            // After Selenium 4 we don't need this line anymore
+//                    driverPool.set(new ChromeDriver(new ChromeOptions().setHeadless(true)));
+//                    break;
+
                 case "chrome-headless":
-//                    WebDriverManager.chromedriver().setup();            // After Selenium 4 we don't need this line anymore
-                    driverPool.set(new ChromeDriver(new ChromeOptions().setHeadless(true)));
+                    chromeOptions = new ChromeOptions();
+                    chromeOptions.setHeadless(true);
+                    WebDriverManager.chromedriver().setup();
+                    driverPool.set(new ChromeDriver(chromeOptions));
                     break;
 
                 case "saucelab-chrome":
@@ -218,6 +229,19 @@ public class Driver {
                         e.printStackTrace();
                     }
                     break;
+
+//                public static void setupSauceLabsChrome() {
+//                    try {
+//                        URL url = new URL("https://oauth-sdetoscar-844c8:66e7117f-390e-4556-8105-07af96a01f7a@ondemand.eu-central-1.saucelabs.com:443/wd/hub");
+//                        DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
+//                        desiredCapabilities.setBrowserName("chrome");
+//                        driverPool.set(new RemoteWebDriver(url, desiredCapabilities));
+//                        driverPool.get().manage().window().maximize();
+//                        driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//                    } catch (MalformedURLException e) {
+//                        Logger.getLogger(Driver.class.getName()).log(Level.SEVERE, "Sauce Labs URL is malformed.", e);
+//                    }
+//                }
 
                 case "firefox":
 

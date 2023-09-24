@@ -2,26 +2,36 @@ package com.cydeo.utilities;
 
 import com.cydeo.pages.CrmProjectTask_Page;
 import org.apache.commons.io.FileUtils;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.Assert;
 import org.openqa.selenium.*;
+import org.openqa.selenium.NoSuchElementException;
+
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.remote.LocalFileDetector;
-import org.openqa.selenium.remote.RemoteWebElement;
+import org.openqa.selenium.remote.*;
 import org.openqa.selenium.support.ui.*;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.OutputType;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
+import java.util.*;
 
 public class BrowserUtils {
 
@@ -155,15 +165,22 @@ for given duration
     /**
      * return a list of string from a list of elements
      *
-     * @param list of webelements
+     * @param webElementList of webelements
      * @return list of string
+     *
+     *         This method accepts a List<WebElements> and returns List<String>
      */
-    public static List<String> getElementsText(List<WebElement> list) {
-        List<String> elemTexts = new ArrayList<>();
-        for (WebElement el : list) {
-            elemTexts.add(el.getText());
+    public static List<String> getElementsText(List<WebElement> webElementList){
+
+        //Create placeholder List<String>
+        List<String> actualAsString = new ArrayList<>();
+
+        for (WebElement each : webElementList) {
+            actualAsString.add(each.getText());
         }
-        return elemTexts;
+
+        return actualAsString;
+
     }
 
     /**
@@ -736,37 +753,6 @@ for given duration
 
 
 
-
-    /**
-     * Downloads a file from a given URL and saves it to the specified local path.
-     *
-     * @param fileURL     The URL of the file to download.
-     * @param localPath   The local file path where the downloaded file should be saved.
-     */
-
-    public static void downloadFile(String fileURL, String localPath) {
-        WebDriver driver = Driver.getDriver();
-
-        // Create an instance of Actions class
-        Actions actions = new Actions(driver);
-
-        // Use contextClick method to perform right-click action
-        actions.contextClick(driver.findElement(By.linkText(fileURL))).build().perform();
-
-        // Press the 'v' key on the keyboard to open the "Save Link As" dialog on Mac
-        actions.sendKeys("v").build().perform();
-
-        // Wait for the "Save As" dialog to appear
-        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.name("Save As")));
-
-        // Set the file name and location in the dialog and press Enter
-        WebElement fileNameInput = Driver.getDriver().findElement(By.name("Save As"));
-        fileNameInput.clear();
-        fileNameInput.sendKeys(localPath);
-        actions.sendKeys("\n").build().perform();
-    }
-
     /**
      * Add a new browser cookie.
      *
@@ -846,6 +832,179 @@ for given duration
     public static void closeCurrentTab() {
         Driver.getDriver().close();
     }
+
+
+
+    /**
+     This method accepts String expected title
+     @param expectedTitle
+     */
+    public static void assertTitle(String expectedTitle){
+
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.titleIs(expectedTitle));
+
+        String actualTitle = Driver.getDriver().getTitle();
+
+        Assert.assertEquals(expectedTitle, actualTitle);
+    }
+
+
+
+    public static WebElement fluentWait(final By locator, int timeInSec) {
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(timeInSec));
+        try {
+            return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+        } catch (NoSuchElementException e) {
+            throw new NoSuchElementException("Element not found: " + locator);
+        }
+    }
+
+
+    /**
+     * Selects a random value from a dropdown list and returns the selected Web Element
+     *
+     * @param select
+     * @return
+     */
+    public WebElement selectRandomTextFromDropdown(Select select) {
+        Random random = new Random();
+        List<WebElement> weblist = select.getOptions();
+        int optionIndex = 1 + random.nextInt(weblist.size() - 1);
+        select.selectByIndex(optionIndex);
+        return select.getFirstSelectedOption();
+    }
+
+
+    /***
+     * This method takes screenshots
+     */
+
+
+    public static void takeScreenshot(WebDriver driver, String saveAs) {
+        try {
+            // Get the current date and time for a unique file name
+            String dateTime = LocalDate.now() + "_" + LocalTime.now().toString().substring(0, 5);
+            saveAs = saveAs + "_" + dateTime.replaceAll("[-,:]", "");
+
+            // Cast the WebDriver to TakesScreenshot
+            TakesScreenshot ts = (TakesScreenshot) driver;
+
+            // Capture the screenshot as a File
+            File screenshotFile = ts.getScreenshotAs(OutputType.FILE);
+
+            // Define the destination directory
+            String screenshotDir = "src/test/resources/Files/ScreenShots/";
+
+            // Create the directory if it doesn't exist
+            File directory = new File(screenshotDir);
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+
+            // Define the complete path for saving the screenshot
+            String screenshotPath = screenshotDir + saveAs + ".png";
+
+            // Copy the screenshot file to the specified path
+            FileUtils.copyFile(screenshotFile, new File(screenshotPath));
+
+            // Print the path to the console or log for reference
+            System.out.println("Screenshot saved as: " + screenshotPath);
+        } catch (IOException e) {
+            // Handle any exceptions that occur during the screenshot capture or file operations
+            e.printStackTrace();
+        }
+    }
+
+
+
+    /**
+     * Reads data from an Excel file at a specified row and cell.
+     *
+     * @param filePath The path to the Excel file.
+     * @param sheetName The name of the sheet in the Excel file.
+     * @param rowNum The row number (0-based index) to read data from.
+     * @param cellNum The cell number (0-based index) to read data from.
+     * @return The data read from the specified cell.
+     */
+    public static String readExcelData(String filePath, String sheetName, int rowNum, int cellNum) {
+        String cellValue = null;
+        FileInputStream file = null;
+        XSSFWorkbook workbook = null;
+
+        try {
+            file = new FileInputStream(filePath);
+            workbook = new XSSFWorkbook(file);
+            XSSFSheet sheet = workbook.getSheet(sheetName);
+            cellValue = sheet.getRow(rowNum).getCell(cellNum).getStringCellValue();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (workbook != null) {
+                    workbook.close();
+                }
+                if (file != null) {
+                    file.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return cellValue;
+    }
+
+    /**
+     * Writes data to an Excel file at a specified row and cell.
+     *
+     * @param filePath The path to the Excel file.
+     * @param sheetName The name of the sheet in the Excel file.
+     * @param rowNum The row number (0-based index) to write data to.
+     * @param cellNum The cell number (0-based index) to write data to.
+     * @param data The data to write to the specified cell.
+     */
+    public static void writeExcelData(String filePath, String sheetName, int rowNum, int cellNum, String data) {
+        FileInputStream file = null;
+        XSSFWorkbook workbook = null;
+        FileOutputStream outFile = null;
+
+        try {
+            file = new FileInputStream(filePath);
+            workbook = new XSSFWorkbook(file);
+            XSSFSheet sheet = workbook.getSheet(sheetName);
+
+            Row row = sheet.getRow(rowNum);
+            if (row == null) {
+                row = sheet.createRow(rowNum);
+            }
+
+            Cell cell = row.createCell(cellNum);
+            cell.setCellValue(data);
+
+            outFile = new FileOutputStream(filePath);
+            workbook.write(outFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (workbook != null) {
+                    workbook.close();
+                }
+                if (file != null) {
+                    file.close();
+                }
+                if (outFile != null) {
+                    outFile.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
 
 
     // Method to create a folder
@@ -943,6 +1102,27 @@ for given duration
         return folder.delete();
     }
 
+
+
+    public static void cleanFolder(){
+        File folder = new File(System.getProperty("user.dir") + "/src/test/java/com/cydeo/Download");
+        File[] files = folder.listFiles();
+        for (File file : files) {
+            file.delete();
+        }
+    }
+
+
+    public static void cleanFolder(String folderName){
+        File folder = new File(System.getProperty("user.dir") + "/src/test/java/com/cydeo/" + folderName);
+        File[] files = folder.listFiles();
+        for (File file : files) {
+            file.delete();
+        }
+    }
+
+
+
     // Method to count the number of files in a folder
     public static int countFilesInFolder() {
         String folderPath = "src/test/java/com/cydeo/Download";
@@ -979,6 +1159,40 @@ for given duration
         return 0;
     }
 
+
+//    private WebDriver driver;
+//
+//    // Constructor
+//    public BrowserUtils(WebDriver driver) {
+//        this.driver = driver;
+//    }
+
+    // Method to download a file
+    public static void downloadFile(String fileUrl) {
+        // Navigate to the file URL
+        Driver.getDriver().get(fileUrl);
+
+        // Find the link to download the file
+        WebElement downloadLink = Driver.getDriver().findElement(By.linkText("Download"));
+
+        // Get the file download URL
+        String fileDownloadUrl = downloadLink.getAttribute("href");
+
+        // Use a tool like wget or curl to download the file
+        // You can use Java's ProcessBuilder to execute shell commands
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder("wget", "-P", "/path/to/save/directory", fileDownloadUrl);
+            Process process = processBuilder.start();
+            int exitCode = process.waitFor();
+            if (exitCode == 0) {
+                System.out.println("File downloaded successfully.");
+            } else {
+                System.err.println("Failed to download the file.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
 

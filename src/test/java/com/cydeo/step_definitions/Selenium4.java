@@ -1,5 +1,6 @@
 package com.cydeo.step_definitions;
 
+import com.cydeo.pages.CrmProjectTask_Page;
 import com.cydeo.pages.selenium4;
 import com.cydeo.utilities.BrowserUtils;
 import com.cydeo.utilities.Driver;
@@ -12,9 +13,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WindowType;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.locators.RelativeLocator;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.IOException;
 import java.time.Duration;
 
 
@@ -175,4 +178,59 @@ public class Selenium4 {
         BrowserUtils.countFilesInFolder();
         BrowserUtils.deleteFolder();
     }
+
+//
+//    @Then("the file should be downloaded successfully")
+//    public void theFileShouldBeDownloadedSuccessfully() {
+//        String fileURL = "https://www.cprime.com/wp-content/uploads/woocommerce_uploads/2013/05/cPrime-ScrumMaster-Cheat-Sheet.pdf";
+//        String localPath = "src/test/java/com/cydeo/folderName";
+//        BrowserUtils.downloadFile(fileURL);
+//    }
+
+
+    @Given("I am on the website")
+    public void iAmOnTheWebsite() {
+        // Initialize the WebDriver
+
+        Driver.getDriver().get("https://docs.google.com/viewer?a=v&pid=sites&srcid=ZWxwb2xpLmVkdS5jb3x0YWxsZXJ8Z3g6NTQxOTkzMmIxY2YyZWI4ZA");
+    }
+
+    @When("I click on the PDF download link")
+    public void iClickOnThePDFDownloadLink() {
+        CrmProjectTask_Page taskPage = new CrmProjectTask_Page();
+        // Locate and click the PDF download link
+        WebElement pdfLink = taskPage.downloadLink;
+        pdfLink.click();
+    }
+
+    @Then("the PDF file should be downloaded successfully")
+    public void thePDFFileShouldBeDownloadedSuccessfully() {
+        // You can implement logic here to verify the file download.
+        // This might involve checking the download directory or verifying the file's existence.
+        // For simplicity, we'll just pause for a few seconds.
+        try {
+            Thread.sleep(5000); // Sleep for 5 seconds to simulate verification
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Then("cleanDownloadFolder")
+    public void cleandownloadfolder() {
+        BrowserUtils.cleanFolder();
+    }
+
+    @Then("clean {string} Folder")
+    public void cleanFolder(String folderName) {
+        BrowserUtils.cleanFolder(folderName);
+    }
+
+
+    @Then("TakeScreenShots and save as {string}")
+    public void takeScreenshotsAndSaveAs(String saveAs) {
+        BrowserUtils.takeScreenshot(Driver.getDriver(), saveAs);
+
+    }
 }
+

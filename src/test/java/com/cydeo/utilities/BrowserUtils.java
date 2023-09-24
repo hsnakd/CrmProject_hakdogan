@@ -948,13 +948,17 @@ for given duration
      * @param cellNum The cell number (0-based index) to read data from.
      * @return The data read from the specified cell.
      */
-    public static String readExcelData(String filePath, String sheetName, int rowNum, int cellNum) {
+
+    private static final String excelFileDir = "src/test/resources/Files/excelFile/";
+
+//    public static String readExcelData(String filePath, String sheetName, int rowNum, int cellNum) {
+    public static String readExcelData(String sheetName, int rowNum, int cellNum) {
         String cellValue = null;
         FileInputStream file = null;
         XSSFWorkbook workbook = null;
 
         try {
-            file = new FileInputStream(filePath);
+            file = new FileInputStream(excelFileDir);
             workbook = new XSSFWorkbook(file);
             XSSFSheet sheet = workbook.getSheet(sheetName);
             cellValue = sheet.getRow(rowNum).getCell(cellNum).getStringCellValue();

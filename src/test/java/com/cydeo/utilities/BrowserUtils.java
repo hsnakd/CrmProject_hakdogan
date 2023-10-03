@@ -1220,6 +1220,10 @@ for given duration
     }
 
 
+    public WebElement dynamicElement(String tagName, String condition) {
+        String xpath = "//" + tagName + "[contains(translate(text(), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), '" + condition.toLowerCase() + "')]";
+        return Driver.getDriver().findElement(By.xpath(xpath));
+    }
 
 
 }

@@ -1138,13 +1138,26 @@ for given duration
     }
 
 
-    public static void cleanFolder(String folderName){
+    public static void cleanFolder(String folderName) {
         File folder = new File(System.getProperty("user.dir") + "/src/test/java/com/cydeo/" + folderName);
-        File[] files = folder.listFiles();
-        for (File file : files) {
-            file.delete();
+
+        // Check if the folder exists and is a directory
+        if (folder.exists() && folder.isDirectory()) {
+            File[] files = folder.listFiles();
+
+            // Check if files is not null before attempting to iterate
+            if (files != null) {
+                for (File file : files) {
+                    file.delete();
+                }
+            } else {
+                System.out.println("No files to delete in the folder: " + folder.getAbsolutePath());
+            }
+        } else {
+            System.out.println("The specified folder does not exist or is not a directory: " + folder.getAbsolutePath());
         }
     }
+
 
 
 

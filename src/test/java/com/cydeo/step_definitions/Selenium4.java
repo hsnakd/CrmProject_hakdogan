@@ -102,12 +102,12 @@ public class Selenium4 {
     @Then("RelativeLocators")
     public void relativelocators() {
 
-        WebElement aboutLink =  Driver.getDriver().findElement(By.cssSelector("a[class='gb_B']"));
+        WebElement aboutLink =  Driver.getDriver().findElement(By.cssSelector("a[class='pHiOh']"));
 
-        WebElement storeLink1 =  Driver.getDriver().findElement(By.cssSelector("a[class='gb_B']"));
+        WebElement storeLink1 =  Driver.getDriver().findElement(By.cssSelector("a[class='pHiOh']"));
         System.out.println("storeLink.getText() = " + storeLink1.getText());
 
-        WebElement storeLink2 =  Driver.getDriver().findElement(RelativeLocator.with(By.cssSelector("a[class='gb_B']")).toRightOf(aboutLink));
+        WebElement storeLink2 =  Driver.getDriver().findElement(RelativeLocator.with(By.cssSelector("a[class='pHiOh']")).toRightOf(aboutLink));
         System.out.println("storeLink2.getText() = " + storeLink2.getText());
     }
 
@@ -192,7 +192,7 @@ public class Selenium4 {
     public void iAmOnTheWebsite() {
         // Initialize the WebDriver
 
-        Driver.getDriver().get("https://docs.google.com/viewer?a=v&pid=sites&srcid=ZWxwb2xpLmVkdS5jb3x0YWxsZXJ8Z3g6NTQxOTkzMmIxY2YyZWI4ZA");
+        Driver.getDriver().get("https://www.colesclassroom.com/wp-content/uploads/2020/03/Photography-Cheat-Sheets.pdf");
     }
 
     @When("I click on the PDF download link")

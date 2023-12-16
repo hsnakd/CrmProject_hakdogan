@@ -133,6 +133,8 @@ public class Driver {
                     ChromeOptions chromeOptions = new ChromeOptions();
                     chromeOptions.addArguments("--lang=en-GB");
                     chromeOptions.addArguments("--disable-notifications");
+                    chromeOptions.addArguments("--disable-extensions");
+                    chromeOptions.addArguments("--ignore-certificate-errors");
 
 //                    chromeOptions.addArguments("--lang= locale-of-choice");
 //                    chromeOptions.addArguments("headless");

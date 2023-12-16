@@ -1,4 +1,4 @@
-@AZLC-1537 @smoke
+@AZLC-1537
 Feature: Quick Navigate Menu Task feature
   User Story :
   As a user, I should be able to assign tasks under Quick Navigate Menu.
@@ -10,7 +10,7 @@ Feature: Quick Navigate Menu Task feature
 
 
 # 1. HR User should be able to create a "High priority" tasks with the mandatory fields.
-  @AZLC-1544
+  @AZLC-1544 @smoke
   Scenario:   HR User should be able to create a "High priority" tasks with the mandatory fields.
     And Click High Priority checkbox
     And Write Task Name in the Things to do box
@@ -20,7 +20,7 @@ Feature: Quick Navigate Menu Task feature
     Then Verify if the task is high priority
 
 
-  @AZLC-1545
+  @AZLC-1545 @smoke
 #  2. HR User should be able to assign a task to more than one user (Test with adding 3 users max.)
   Scenario: HR User should be able to assign a task to more than one user
     And Write Task Name in the Things to do box
@@ -42,7 +42,7 @@ Feature: Quick Navigate Menu Task feature
     Then Verify that task is created under MY TASKS table
 
 
-  @AZLC-1547
+  @AZLC-1547 @smoke
 #  4. Checklist should be able to be added while creating a task.
   Scenario: Checklist should be able to be added while creating a task
     And Write Task Name in the Things to do box
@@ -54,7 +54,7 @@ Feature: Quick Navigate Menu Task feature
     Then Verify that while creating a task checklist is added
 
 
-  @AZLC-1548
+  @AZLC-1548 @smoke
 #  5. Deadline should be able to be added while creating a task.
   Scenario: Deadline should be able to be added while creating a task
     And Write Task Name in the Things to do box
@@ -64,7 +64,7 @@ Feature: Quick Navigate Menu Task feature
     Then Verify that while creating a task deadline is added
 
 
-  @AZLC-1549
+  @AZLC-1549 @smoke
 #  6. Time planning function should be able to be used in the setting of deadline.
   Scenario Outline: Time planning function should be able to be used in the setting of deadline
     And Write Task Name in the Things to do box
@@ -72,8 +72,8 @@ Feature: Quick Navigate Menu Task feature
     And Click Time Planning link
     And Add a start time
     And Add a duration "<duration>" "<time>"
-    And  Click on the send button to send the task
-    And  Click the TASK on the left side menu
+    And Click on the send button to send the task
+    And Click the TASK on the left side menu
     Then Verify that while creating a task time planning is added
     Examples:
       | duration | time |

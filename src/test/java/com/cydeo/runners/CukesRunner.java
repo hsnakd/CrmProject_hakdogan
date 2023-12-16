@@ -18,7 +18,7 @@ import org.junit.runner.RunWith;
         },
                         /**
                             #pluginS :
-                                - inside of the plugin, we determine
+                                - inside the plugin, we determine
                                 - the type of the reportS
                                 - where do we want to store our reportS
                                 - the name of the report file
@@ -41,14 +41,14 @@ import org.junit.runner.RunWith;
         // It will be running the snippets.
         // It will be giving us snippets from feature files that we did not implement yet.
                         /**
-                                #dryRun :
-                                - to turn and off our step_definition implementations running or not so we can easily generate snippet.
+                                #dryRun:
+                                - to turn and off our step_definition implementations running or not, so we can easily generate snippet.
 
                                 - if true: turned on. and will not execute the actual code (java-selenium-junit)
                                 - if false: turned off. and will execute the actual code (java-selenium-junit)
                         */
 
-        tags = "  @AZLC-1545",
+        tags = "@AZLC-1537",
         // or / and / and not ==> "@Regression and not @smoke"
 
                         /**

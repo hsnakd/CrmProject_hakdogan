@@ -172,6 +172,12 @@ public class Locators {
     @FindBy(css = "#username")
     public WebElement username;
 
+//    @FindBy(xpath = "//td[contains(text(), 'Minute') or contains (text(), 'Hour')]/../td[1])
+//    public List <WebElement> pdfIcons;
+
+
+
+
 
 }
 
@@ -186,43 +192,45 @@ className			 driver.findElement(By.tagName(“nav-link”));
 linkText			 driver.findElement(By.linkText(“Example4: Element on page”));
 partialLinkText			 driver.findElement(By.partialLinkText(“Example4”));
 
-XPATH
+                                XPATH
 
-Known Att&Value		 //tagName[@attribute=’value’]
-Known Value Only		 //tagName[@*=’value’]
-Known Visible Text		 //tagName[text()=’exact text’]
-			  	 //tagName[.=’exact text’]
-			   	 //*[text()=’exact text’]
-				 //*[.=’exact text’]
+Known Att&Value		             //tagName[@attribute=’value’]
+Known Value Only		         //tagName[@*=’value’]
+Known Visible Text		         //tagName[text()=’exact text’]
+			  	                 //tagName[.=’exact text’]
+			   	                 //*[text()=’exact text’]
+				                 //*[.=’exact text’]
 Known Visible Text (Partial)	 //tagName[contains(text(),’exact text’)]
-Dynamic Element (Contains)	 //tagName[contains(@attribute,’value’)]
+Dynamic Element (Contains)	     //tagName[contains(@attribute,’value’)]
 Dynamic Element (Startswith)	 //tagName[startswith(@attribute,’value’)]
-Dynamic Element (Endswith)	 //tagName[endswith(@attribute,’value’)]
-With Multiple Attributes	 //tagName[@attribute1=’value1’] [@attribute2=’value2’]
- //tagName[@attribute1=’value1’ and @attribute2=’value2’]
- //tagName[@attribute1=’value1’] or @attribute2=’value2’]
-Relative to Known Element	 //<Known part>/parent::*
-				 //<Known part>/parent::tagName
-				 //<Known part>/following-sibling::*
-				 //<Known part>/following-sibling::tagName
+Dynamic Element (Endswith)	     //tagName[endswith(@attribute,’value’)]
+With Multiple Attributes	     //tagName[@attribute1=’value1’] [@attribute2=’value2’]
+                                 //tagName[@attribute1=’value1’ and @attribute2=’value2’]
+                                 //tagName[@attribute1=’value1’] or @attribute2=’value2’]
+Relative to Known Element	     //<Known part>/parent::*
+				                 //<Known part>/parent::tagName
+				                 //<Known part>/following-sibling::*
+				                 //<Known part>/following-sibling::tagName
 
-CSS
 
-ID				 tagName#idValue
-				 #idValue
-className			 tagName.classValue
-				 .classValue
-				 tagName.btn.btn-primary
-Known Att&Value		 tagName[attribute=’value’]
-				 [attribute=’value’]
-Dynamic Element (Contains)	 tagName[ attribute*,’value’]
+
+                                CSS
+
+ID				                 tagName#idValue
+				                 #idValue
+className			             tagName.classValue
+				                 .classValue
+				                 tagName.btn.btn-primary
+Known Att&Value		             tagName[attribute=’value’]
+				                 [attribute=’value’]
+Dynamic Element (Contains)	     tagName[ attribute*,’value’]
 Dynamic Element (Startswith)	 tagName[ attribute^,’value’]
-Dynamic Element (Endswith)	 tagName[ attribute$,’value’]
-If Multiple Results		 <CSS>:nth-of-type(index)
-Multiple Attributes		 tagName[attribute1=’value1’] [attribute2=’value2’]
-Child Element			 tag > tag > tag
-Parent Element			 tag tag tag
-Sibling Element			 <CSS>~tagName
+Dynamic Element (Endswith)	     tagName[ attribute$,’value’]
+If Multiple Results		         <CSS>:nth-of-type(index)
+Multiple Attributes		         tagName[attribute1=’value1’] [attribute2=’value2’]
+Child Element			         tag > tag > tag
+Parent Element			         tag tag tag
+Sibling Element			         <CSS>~tagName
 
 
 

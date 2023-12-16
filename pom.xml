@@ -20,25 +20,36 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>     <!--THE COMPANY NAME   -->
                 <artifactId>maven-surefire-plugin</artifactId>  <!-- PROJECT NAME  -->
-                <version>3.0.0-M5</version>                     <!--VERSION OF THE PLUGIN   -->
+                <version>3.1.2</version>                     <!--VERSION OF THE PLUGIN   -->
 
                 <configuration>                                 <!-- We provide addition configurations  -->
-                    <parallel>methods</parallel>                <!--We run .feature files in parallel   -->
-                    <!-- Runs the Scenarios in parallel with Runner Classes
-                    <parallel>classes</parallel>
-                     -->
-                    <!--
-                    <useUnlimitedThreads>true</useUnlimitedThreads>
-                    -->
-                    <threadCount>4</threadCount>                <!-- How many threads we want to generate  -->
+                    <!-- Run test methods in parallel -->
+                    <parallel>methods</parallel>
+                    <!-- Runs the Scenarios in parallel with Runner Classes-->
+<!--                    <parallel>classes</parallel>-->
+
+<!--                    <useUnlimitedThreads>true</useUnlimitedThreads>-->
+                    <!-- Number of threads for parallel execution -->
+                    <threadCount>8</threadCount>
                     <perCoreThreadCount>false</perCoreThreadCount><!--   -->
                     <testFailureIgnore>true</testFailureIgnore> <!-- Will not stop if a test fails  -->
 
                     <includes>
                         <include>**/CukesRunner*.java</include> <!--when we use "mvn test" lifecycle, it will find the .java class that has the name contains "CukesRunner"   -->
                     </includes>
-
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version> <!-- Use the version that is compatible -->
+
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version> <!-- Use the version that is compatible -->
 
             </plugin>
         </plugins>
@@ -51,14 +62,14 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>4.12.1</version>
+            <version>4.11.0</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
-            <version>5.4.1</version>
+            <version>5.5.3</version>
         </dependency>
 
 
@@ -73,7 +84,7 @@
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
-            <version>7.2.3</version>
+            <version>7.11.1</version>
         </dependency>
 
 
@@ -94,7 +105,7 @@
         </dependency>
 
 
-        <!--If you want to get rid of SLF4J Failed to load message from the console -->
+        <!--If you want to get rid of SLF4J Failed to load a message from the console -->
         <!--SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
             SLF4J: Defaulting to no-operation (NOP) logger implementation
             SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details. -->
@@ -126,6 +137,12 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.7.2</version> <!-- Use the latest version -->
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-opera-driver</artifactId>
             <version>4.2.1</version>
@@ -134,5 +151,20 @@
 
 
     </dependencies>
+
+
+        <profiles>
+            <profile>
+                <id>defaultProfile</id>
+                <activation>
+                    <activeByDefault>true</activeByDefault>
+                </activation>
+                <properties>
+                    <maven.plugin.validation>VERBOSE</maven.plugin.validation>
+                </properties>
+            </profile>
+        </profiles>
+
+
 
 </project>

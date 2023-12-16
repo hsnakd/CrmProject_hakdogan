@@ -140,7 +140,7 @@ public class CrmProjectTask_Page {
     @FindBy(xpath = "//a[.='US-1537_TC-01']")
     public WebElement timePlanningTask;
 
-    @FindBy(xpath = "//*[text()='05/03/2023 09:00 am']")
+    @FindBy(xpath = "//*[text()='05/03/2026 09:00 am']")
     public WebElement checkStartTimePlanningAdded;
 
     @FindBy(xpath = "//span[@class='menu-item-link-text']")
@@ -162,5 +162,8 @@ public class CrmProjectTask_Page {
 
 
     @FindBy(xpath = "//*[@data-tooltip=\"Download\"]")
+    public WebElement downloadLink2;
+
+    @FindBy(id = "icon")
     public WebElement downloadLink;
 }

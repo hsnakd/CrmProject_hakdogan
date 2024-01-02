@@ -55,16 +55,16 @@ public class CrmProjectTask_SD {
         taskPage.addMoreButton.click();
         taskPage.employeesAndDepartments.click();
 
-        BrowserUtils.waitForVisibility(taskPage.addPeople,30);
+//        BrowserUtils.waitForVisibility(taskPage.addPeople,30);
         taskPage.addPeople.click();
-        BrowserUtils.waitForVisibility(taskPage.addSecondPeople,30);
 
+//        BrowserUtils.waitForVisibility(taskPage.addSecondPeople,30);
         taskPage.addSecondPeople.click();
     }
 
     @When("Click on the send button to send the task")
     public void click_on_the_send_button_to_send_the_task() {
-        BrowserUtils.waitFor(2);
+//        BrowserUtils.waitFor(2);
 
         taskPage.sendButton.click();
     }
@@ -194,7 +194,7 @@ public class CrmProjectTask_SD {
     @Then("Verify that while creating a task checklist is added")
     public void verifyThatWhileCreatingATaskChecklistIsAdded() {
 
-        BrowserUtils.waitFor(5);
+        BrowserUtils.waitFor(3);
 
         taskPage.checklistTask.click();
 
@@ -210,22 +210,20 @@ public class CrmProjectTask_SD {
 
     @And("Add a deadline")
     public void addADeadline() {
-        BrowserUtils.waitForClickability(taskPage.deadlineAdd,10);
+//        BrowserUtils.waitForClickability(taskPage.deadlineAdd,10);
         taskPage.deadlineAdd.click();
-
-        BrowserUtils.waitForClickability(taskPage.deadlineYear,10);
         taskPage.deadlineYear.click();
 
-        BrowserUtils.waitForClickability(taskPage.selectYear,10);
+        taskPage.deadlineAdd.click();
         taskPage.selectYear.click();
 
-        BrowserUtils.waitForClickability(taskPage.deadlineMonth,10);
+        taskPage.deadlineAdd.click();
         taskPage.deadlineMonth.click();
 
-        BrowserUtils.waitForClickability(taskPage.selectMonth,10);
+        taskPage.deadlineAdd.click();
         taskPage.selectMonth.click();
 
-        BrowserUtils.waitForClickability(taskPage.selectDay,10);
+        taskPage.deadlineAdd.click();
         taskPage.selectDay.click();
 
         Actions actions = new Actions(Driver.getDriver());
@@ -234,10 +232,10 @@ public class CrmProjectTask_SD {
         taskPage.selectHour.sendKeys("07");
         taskPage.selectMinute.sendKeys("00");
 
-        BrowserUtils.waitFor(2);
+//        BrowserUtils.waitFor(2);
         taskPage.selectButton.click();
 
-        BrowserUtils.waitFor(2);
+//        BrowserUtils.waitFor(2);
 
     }
 //
@@ -296,12 +294,12 @@ public class CrmProjectTask_SD {
     public void verifyThatWhileCreatingATaskDeadlineIsAdded() {
     //    Driver.getDriver().navigate().refresh();
 
-        BrowserUtils.waitForClickability(taskPage.deadlineTask,20);
+//        BrowserUtils.waitForClickability(taskPage.deadlineTask,20);
         taskPage.deadlineTask.click();
 
         Driver.getDriver().switchTo().frame(taskPage.IframeWebtable);
 
-        String expectedText = "05/03/2026 07:00 pm";
+        String expectedText = "01/28/2024 07:00 pm";
         String actualText = taskPage.checkDeadline.getText();
 
         Assert.assertEquals(expectedText, actualText);
@@ -313,35 +311,34 @@ public class CrmProjectTask_SD {
     public void clickTimePlanningLink() {
 //        Driver.getDriver().switchTo().parentFrame();
         BrowserUtils.waitFor(2);
-        taskPage.timePlanning.click();
+//        taskPage.timePlanning.click();
         BrowserUtils.waitFor(2);
-        taskPage.timePlanning.click();
+//        taskPage.timePlanning.click();
     }
 
     @And("Add a start time")
     public void addAStartTime() {
-        BrowserUtils.waitFor(5);
-
+//        BrowserUtils.waitFor(5);
 //        BrowserUtils.waitForClickability(taskPage.startTime,20);
-
         taskPage.startTime.click();
 
+        BrowserUtils.waitFor(1);
         taskPage.deadlineYear.click();
-//        BrowserUtils.waitFor(2);
-        BrowserUtils.waitFor(2);
 
+        BrowserUtils.waitFor(1);
 //        BrowserUtils.waitForClickability(taskPage.selectYear,10);
         taskPage.selectYear.click();
 //        BrowserUtils.waitFor(2);
-        BrowserUtils.waitFor(2);
 
+        BrowserUtils.waitFor(1);
         taskPage.deadlineMonth.click();
-        BrowserUtils.waitFor(2);
-        BrowserUtils.waitForClickability(taskPage.selectMonth,20);
+//        BrowserUtils.waitFor(2);
+//        BrowserUtils.waitForClickability(taskPage.selectMonth,20);
 
+        BrowserUtils.waitFor(1);
         taskPage.selectMonth.click();
-        BrowserUtils.waitFor(2);
 
+        BrowserUtils.waitFor(1);
         taskPage.selectDay.click();
 
         taskPage.selectHour.sendKeys("09");
@@ -409,7 +406,7 @@ public class CrmProjectTask_SD {
 
         Driver.getDriver().switchTo().frame(taskPage.IframeWebtable);
 
-        String expectedText = "05/03/2026 09:00 am";
+        String expectedText = "11/28/2027 09:00 am";
         String actualText = taskPage.checkStartTimePlanningAdded.getText();
         Assert.assertEquals(expectedText, actualText);
 

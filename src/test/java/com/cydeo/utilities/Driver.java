@@ -213,7 +213,8 @@ public class Driver {
 
                 case "chrome-headless":
                     chromeOptions = new ChromeOptions();
-                    chromeOptions.setHeadless(true);
+                    chromeOptions.addArguments("--headless=new");
+//                    chromeOptions.setHeadless(true);
                     WebDriverManager.chromedriver().setup();
                     driverPool.set(new ChromeDriver(chromeOptions));
                     break;

@@ -61,6 +61,7 @@ Feature: Quick Navigate Menu Task feature
     And Write a message in the message box
     And Add a deadline
     And  Click on the send button to send the task
+    And Click the TASK on the left side menu
     Then Verify that while creating a task deadline is added
 
 

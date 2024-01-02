@@ -91,16 +91,16 @@ public class CrmProjectTask_Page {
     @FindBy(xpath = "//a[@class='bx-calendar-top-year']")
     public WebElement deadlineYear;
 
-    @FindBy(xpath = "//span[@data-bx-year='2026']")
+    @FindBy(xpath = "(//*[contains(@class, 'bx-calendar-year-number')])[.='2027']")
     public WebElement selectYear;
 
     @FindBy(xpath = "//a[@class='bx-calendar-top-month']")
     public WebElement deadlineMonth;
 
-    @FindBy(xpath = "//span[@data-bx-month='4']")
+    @FindBy(xpath = "(//*[contains(@class, 'bx-calendar-month')])[.='December']")
     public WebElement selectMonth;
 
-    @FindBy(xpath = "(//*[contains(@class, 'bx-calendar-cell')])[.='3']")
+    @FindBy(xpath = "(//*[contains(@class, 'bx-calendar-cell')])[.='28']")
 //    @FindBy(xpath = "//a[@class='bx-calendar-cell'] [.='3']")
     public WebElement selectDay;
 
@@ -122,7 +122,7 @@ public class CrmProjectTask_Page {
     @FindBy(xpath = "//span[.='Time planning']")
     public WebElement timePlanning;
 
-    @FindBy(xpath = "//span[@data-bx-id='dateplanmanager-start-date-plan']")
+    @FindBy(xpath = "//*[@data-bx-id='dateplanmanager-start-date-plan']")
     public WebElement startTime;
 
     @FindBy(xpath = "//input[@data-bx-id='dateplanmanager-duration']")
@@ -140,7 +140,7 @@ public class CrmProjectTask_Page {
     @FindBy(xpath = "//a[.='US-1537_TC-01']")
     public WebElement timePlanningTask;
 
-    @FindBy(xpath = "//*[text()='05/03/2026 09:00 am']")
+    @FindBy(xpath = "//*[text()='11/28/2027 09:00 am']")
     public WebElement checkStartTimePlanningAdded;
 
     @FindBy(xpath = "//span[@class='menu-item-link-text']")

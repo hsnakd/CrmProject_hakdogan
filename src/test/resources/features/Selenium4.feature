@@ -1,7 +1,7 @@
 @Selenium4 @smoke
-Feature: Quick Navigate Menu Task feature
+Feature: Selenium4
   User Story :
-  As a user, I should be able to assign tasks under Quick Navigate Menu.
+  As a user, I should be able to use Selenium4.
 
 
   Background: log in page feature

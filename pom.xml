@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.cydeo</groupId>
-    <artifactId>CucumberProjectHsnAkd</artifactId>
+    <artifactId>CrmProject_HsnAkd</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -30,7 +30,7 @@
 
 <!--                    <useUnlimitedThreads>true</useUnlimitedThreads>-->
                     <!-- Number of threads for parallel execution -->
-                    <threadCount>8</threadCount>
+                    <threadCount>4</threadCount>
                     <perCoreThreadCount>false</perCoreThreadCount><!--   -->
                     <testFailureIgnore>true</testFailureIgnore> <!-- Will not stop if a test fails  -->
 
@@ -95,7 +95,7 @@
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
-            <version>7.11.1</version>
+            <version>7.11.0</version>
         </dependency>
 
 
@@ -103,7 +103,7 @@
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-junit</artifactId>
-            <version>7.2.3</version>
+            <version>7.11.0</version>
             <scope>test</scope>
         </dependency>
 
@@ -112,7 +112,7 @@
         <dependency>
             <groupId>me.jvt.cucumber</groupId>
             <artifactId>reporting-plugin</artifactId>
-            <version>7.2.0</version>
+            <version>7.11.0</version>
         </dependency>
 
 

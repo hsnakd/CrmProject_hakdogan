@@ -4,11 +4,11 @@ import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 import org.junit.runner.RunWith;
 
-@RunWith(Cucumber.class)
-@CucumberOptions(
-        plugin = {
-                 "pretty",            // basically it just prints out additional information about the scenario that is being executed.
-                                      // used to print out additional information about the scenario currently executed
+@RunWith(Cucumber.class)            //  This annotation tells JUnit to run this class using the Cucumber class.
+@CucumberOptions(                   // This annotation provides the configuration for your Cucumber tests.
+        plugin = {                  // Specifies the different output formats for your test results (pretty, html, rerun, etc.).
+                 "pretty",          // basically, it just prints out additional information about the scenario that is being executed.
+                                    // used to print out additional information about the scenario currently executed
 
                 "html:target/cucumber-report.html",             // this generates default cucumber html report
                 "rerun:target/rerun.txt",                       // this generates rerun.txt for keep tracking of failed tests
@@ -17,7 +17,7 @@ import org.junit.runner.RunWith;
                 "junit:target/junit/junit-report.xml",          //
         },
                         /**
-                            #pluginS :
+                            #plugins:
                                 - inside the plugin, we determine
                                 - the type of the reportS
                                 - where do we want to store our reportS
@@ -25,19 +25,19 @@ import org.junit.runner.RunWith;
 
                         */
 
-        features = "src/test/resources/features",
+        features = "src/test/resources/features",                       // Defines the location of your feature files.
         // Right click-->Copy Path/Reference-->Path From Content Root
         // feature : where we pass feature files path
 
-        glue = "com/cydeo/step_definitions",
+        glue = "com/cydeo/step_definitions",                            // Specifies the package where your step definitions are located.
         // Right click-->Copy Path/Reference-->Path From Source Root
         // glue : where we pass step_definitions path
 
-        dryRun = false,
+        dryRun = false,                                                 // When set to false, it will execute the actual tests; if true, it will only check if all steps have corresponding step definitions.
         // if false: If we already implement and everything is already ready in step definitions.
         // executing the step definitions
 
-        // if true: It won't be running our step definitions codes /  not executing the step definitions
+        // if true : It won't be running our step definitions codes /  not executing the step definitions
         // It will be running the snippets.
         // It will be giving us snippets from feature files that we did not implement yet.
                         /**
@@ -48,7 +48,8 @@ import org.junit.runner.RunWith;
                                 - if false: turned off. and will execute the actual code (java-selenium-junit)
                         */
 
-        tags = "@AZLC-1537",
+        tags = "@AZLC-1537",                                            // Allows you to run a specific subset of scenarios based on tags.
+
         // or / and / and not ==> "@Regression and not @smoke"
 
                         /**
@@ -67,7 +68,7 @@ import org.junit.runner.RunWith;
                                 - if a scenario has @c tag, it will NOT be executed.
                         */
 
-        publish = true
+        publish = true                      // Indicates whether to publish the results.
         /*
         publish = true;
                 --> will enable a functionality from cucumber to generate a public link for the report of our final execution of our code

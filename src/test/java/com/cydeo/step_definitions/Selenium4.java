@@ -199,8 +199,13 @@ public class Selenium4 {
     public void iClickOnThePDFDownloadLink() {
         CrmProjectTask_Page taskPage = new CrmProjectTask_Page();
         // Locate and click the PDF download link
-        WebElement pdfLink = taskPage.downloadLink;
-        pdfLink.click();
+
+        taskPage.downloadLink.click();
+
+
+
+
+
     }
 
     @Then("the PDF file should be downloaded successfully")

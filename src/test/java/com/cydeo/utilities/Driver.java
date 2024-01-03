@@ -21,8 +21,7 @@ import java.net.URL;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 public class Driver {
 //    Making our 'driver' instance private, so that it is not reachable from outside any class
@@ -53,30 +52,30 @@ public class Driver {
 
 
 //We make it static, because we want it to run before anything else, also we will use it in static method
-    public static WebDriver environmentMethod(String environment){
-//        Change environment within maven command for test execution
-
-        String env = System.getProperty("environment");
-
-        if (env != null) {
-            switch (env) {
-                case "qa":
-                    Driver.getDriver().get(ConfigurationReader.getProperty("qaEnvironment"));
-                    break;
-                case "dev":
-                    Driver.getDriver().get(ConfigurationReader.getProperty("devEnvironment"));
-                    break;
-                case "stage":
-                    Driver.getDriver().get(ConfigurationReader.getProperty("stageEnvironment"));
-                    break;
-            }
-        } else {
-            String url = environment;
-//            String url = ConfigurationReader.getProperty("environment");
-            Driver.getDriver().get(url);
-        }
-        return null;
-    }
+//    public static WebDriver environmentMethod(String environment){
+////        Change environment within maven command for test execution
+//
+//        String env = System.getProperty("environment");
+//
+//        if (env != null) {
+//            switch (env) {
+//                case "qa":
+//                    Driver.getDriver().get(ConfigurationReader.getProperty("qaEnvironment"));
+//                    break;
+//                case "dev":
+//                    Driver.getDriver().get(ConfigurationReader.getProperty("devEnvironment"));
+//                    break;
+//                case "stage":
+//                    Driver.getDriver().get(ConfigurationReader.getProperty("stageEnvironment"));
+//                    break;
+//            }
+//        } else {
+//            String url = environment;
+////            String url = ConfigurationReader.getProperty("environment");
+//            Driver.getDriver().get(url);
+//        }
+//        return null;
+//    }
 
     /*
     Creating a private constructor, so we are closing

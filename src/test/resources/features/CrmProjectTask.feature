@@ -1,4 +1,4 @@
-@AZLC-1537
+@AZLC-1537 @smoke
 Feature: Quick Navigate Menu Task feature
   User Story :
   As a user, I should be able to assign tasks under Quick Navigate Menu.

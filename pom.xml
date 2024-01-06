@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.cydeo</groupId>
-    <artifactId>CrmProject_HsnAkd</artifactId>
+    <artifactId>CrmProject_hakdogan</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -23,35 +23,26 @@
                 <version>3.1.2</version>                     <!--VERSION OF THE PLUGIN   -->
 
                 <configuration>                                 <!-- We provide addition configurations  -->
-                    <!-- Run test methods in parallel -->
-                    <parallel>methods</parallel>
-                    <!-- Runs the Scenarios in parallel with Runner Classes-->
-<!--                    <parallel>classes</parallel>-->
-
-<!--                    <useUnlimitedThreads>true</useUnlimitedThreads>-->
-                    <!-- Number of threads for parallel execution -->
-                    <threadCount>4</threadCount>
+                    <parallel>methods</parallel>                <!--We run .feature files in parallel   -->
+                    <!-- Runs the Scenarios in parallel with Runner Classes
+                    <parallel>classes</parallel>
+                     -->
+                    <!--
+                    <useUnlimitedThreads>true</useUnlimitedThreads>
+                    -->
+                    <threadCount>12</threadCount>                <!-- How many threads we want to generate  -->
                     <perCoreThreadCount>false</perCoreThreadCount><!--   -->
                     <testFailureIgnore>true</testFailureIgnore> <!-- Will not stop if a test fails  -->
 
                     <includes>
                         <include>**/CukesRunner*.java</include> <!--when we use "mvn test" lifecycle, it will find the .java class that has the name contains "CukesRunner"   -->
                     </includes>
+
                 </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version> <!-- Use the version that is compatible -->
 
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>3.3.1</version> <!-- Use the version that is compatible -->
 
-            </plugin>
+
         </plugins>
 
     </build>
@@ -65,13 +56,6 @@
             <version>4.11.0</version>
         </dependency>
 
-
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-devtools-v86 &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.seleniumhq.selenium</groupId>-->
-<!--            <artifactId>selenium-devtools-v86</artifactId>-->
-<!--            <version>4.0.0-beta-1</version>-->
-<!--        </dependency>-->
 
 
         <!-- https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
@@ -88,8 +72,6 @@
             <artifactId>javafaker</artifactId>
             <version>1.0.2</version>
         </dependency>
-
-
 
         <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-java -->
         <dependency>
@@ -109,6 +91,8 @@
 
         <!-- https://gitlab.com/jamietanna/cucumber-reporting-plugin -->
         <!-- https://github.com/damianszczepanik/cucumber-reporting -->
+        <!--       <version>7.2.0</version>-->
+        <!-- https://mvnrepository.com/artifact/me.jvt.cucumber/reporting-plugin -->
         <dependency>
             <groupId>me.jvt.cucumber</groupId>
             <artifactId>reporting-plugin</artifactId>
@@ -116,7 +100,7 @@
         </dependency>
 
 
-        <!--If you want to get rid of SLF4J Failed to load a message from the console -->
+        <!--If you want to get rid of SLF4J Failed to load message from the console -->
         <!--SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
             SLF4J: Defaulting to no-operation (NOP) logger implementation
             SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details. -->
@@ -134,6 +118,7 @@
             <version>5.2.2</version>
         </dependency>
 
+
         <!-- https://mvnrepository.com/artifact/com.aventstack/extentreports -->
         <dependency>
             <groupId>com.aventstack</groupId>
@@ -141,41 +126,22 @@
             <version>4.0.9</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>5.8.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.7.2</version> <!-- Use the latest version -->
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-opera-driver</artifactId>
-            <version>4.2.1</version>
-            <scope>test</scope>
-        </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>org.junit.jupiter</groupId>-->
+<!--            <artifactId>junit-jupiter</artifactId>-->
+<!--            <version>5.8.0</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.junit.jupiter</groupId>-->
+<!--            <artifactId>junit-jupiter-engine</artifactId>-->
+<!--            <version>5.7.2</version> &lt;!&ndash; Use the latest version &ndash;&gt;-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
 
 
     </dependencies>
-
-
-        <profiles>
-            <profile>
-                <id>defaultProfile</id>
-                <activation>
-                    <activeByDefault>true</activeByDefault>
-                </activation>
-                <properties>
-                    <maven.plugin.validation>VERBOSE</maven.plugin.validation>
-                </properties>
-            </profile>
-        </profiles>
-
-
 
 </project>

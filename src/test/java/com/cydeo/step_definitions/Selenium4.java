@@ -3,21 +3,17 @@ package com.cydeo.step_definitions;
 import com.cydeo.pages.CrmProjectTask_Page;
 import com.cydeo.pages.selenium4;
 import com.cydeo.utilities.BrowserUtils;
+import com.cydeo.utilities.ConfigurationReader;
 import com.cydeo.utilities.Driver;
-import com.cydeo.utilities.Environment;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WindowType;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.locators.RelativeLocator;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.io.IOException;
 import java.time.Duration;
 
 
@@ -27,7 +23,7 @@ public class Selenium4 {
 
     @Given("go to page")
     public void goToPage() {
-        Driver.getDriver().get(Environment.URL);
+        Driver.getDriver().get(ConfigurationReader.getProperty("url2"));
 
     }
 

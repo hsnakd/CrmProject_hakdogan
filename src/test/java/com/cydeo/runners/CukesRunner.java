@@ -48,7 +48,7 @@ import org.junit.runner.RunWith;
                                 - if false: turned off. and will execute the actual code (java-selenium-junit)
                         */
 
-        tags = "@AZLC-1537",                                            // Allows you to run a specific subset of scenarios based on tags.
+        tags = "@smoke",                                            // Allows you to run a specific subset of scenarios based on tags.
 
         // or / and / and not ==> "@Regression and not @smoke"
 

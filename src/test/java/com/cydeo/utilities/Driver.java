@@ -9,6 +9,7 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -90,26 +91,62 @@ public class Driver {
 
             switch (browserType.toLowerCase()){
                 case "chrome":
-                    WebDriverManager.chromedriver().setup();
+//                    WebDriverManager.chromedriver().setup();    // After Selenium 4 we don't need this line anymore
                     ChromeOptions chromeOptions = new ChromeOptions();
+                    chromeOptions.addArguments("--lang=en-GB");
                     chromeOptions.addArguments("--disable-notifications");
-                    driverPool.set(new ChromeDriver());
+                    chromeOptions.addArguments("--disable-extensions");
+                    chromeOptions.addArguments("--ignore-certificate-errors");
+
+//                    chromeOptions.addArguments("--lang= locale-of-choice");
+//                    chromeOptions.addArguments("headless");
+//                    chromeOptions.addArguments("no-sandbox");
+//                    chromeOptions.addArguments("window-size=1200x600");
+//                    chromeOptions.addArguments(
+//                            "--verbose",
+//                            "--headless",
+//                            "--disable-web-security",
+//                            "--ignore-certificate-errors",
+//                            "--allow-running-insecure-content",
+//                            "--allow-insecure-localhost",
+//                            "--no-sandbox",
+//                            "--disable-gpu"
+//                    );
+                    driverPool.set(new ChromeDriver(chromeOptions));
                     driverPool.get().manage().window().maximize();
-                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                    driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                    break;
+
+
+                case "chrome-locale":
+//                    WebDriverManager.chromedriver().setup();            // After Selenium 4 we don't need this line anymore
+                    chromeOptions = new ChromeOptions();
+                    Map<String, Object> prefs = new HashMap<>();
+                    chromeOptions.addArguments("--disable-notifications");
+                    prefs.put("intl.accept_languages", "en-GB");
+                    chromeOptions.setExperimentalOption("prefs", prefs);
+                    driverPool.set(new ChromeDriver(chromeOptions));
+                    driverPool.get().manage().window().maximize();
+                    driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
                     break;
 
                 case "chrome-incognito":
-                    WebDriverManager.chromedriver().setup();
-//                    ChromeOptions chromeOptions = new ChromeOptions();
+//                    WebDriverManager.chromedriver().setup();            // After Selenium 4 we don't need this line anymore
+//                    chromeOptions = new ChromeOptions();
                     chromeOptions = new ChromeOptions();
                     chromeOptions.addArguments("--incognito");  // ChromeOptions for starting chrome in incognito mode
                     chromeOptions.addArguments("--disable-notifications");
-                    DesiredCapabilities capabilitiesChrome = new DesiredCapabilities();
-                    capabilitiesChrome.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
-                    chromeOptions.merge(capabilitiesChrome);
+                    chromeOptions.addArguments("--lang=en-GB");
+//                    DesiredCapabilities capabilitiesChrome = new DesiredCapabilities();
+//                    capabilitiesChrome.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+                    chromeOptions.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+                    chromeOptions.merge(chromeOptions);
+//                    chromeOptions.merge(capabilitiesChrome);
                     driverPool.set(new ChromeDriver(chromeOptions));
                     driverPool.get().manage().window().maximize();
-                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                    driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                     break;
 
 //                DesiredCapabilities - a class that is used for Webdriver configuration.
@@ -118,23 +155,34 @@ public class Driver {
 
                 case "remote-chrome":
                     try {
-                        // assign your grid server address : 54.235.53.73. ==> 54.89.242.106  ==> 184.72.110.69
-                        String gridAddress = "3.82.116.209"; // put your own Linux grid IP here
+                        // assign your grid server address : 54.235.53.73. ==> 54.89.242.106  ==> 184.72.110.69 "3.82.116.209"
+                        String gridAddress = "3.86.220.209"; // put your own Linux grid IP here
                         URL url = new URL("http://"+gridAddress+":4444/wd/hub");
                         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
                         desiredCapabilities.setBrowserName("chrome");
                         driverPool.set(new RemoteWebDriver(url,desiredCapabilities));
                         driverPool.get().manage().window().maximize();
-                        driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                        driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//                        driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
                     }
                     break;
 
+//                case "chrome-headless":
+////                    WebDriverManager.chromedriver().setup();            // After Selenium 4 we don't need this line anymore
+//                    driverPool.set(new ChromeDriver(new ChromeOptions().setHeadless(true)));
+//                    break;
+
+
                 case "chrome-headless":
+                    chromeOptions = new ChromeOptions();
+                    chromeOptions.addArguments("--headless=new");
+//                    chromeOptions.setHeadless(true);
                     WebDriverManager.chromedriver().setup();
-                    driverPool.set(new ChromeDriver(new ChromeOptions().setHeadless(true)));
+                    driverPool.set(new ChromeDriver(chromeOptions));
                     break;
+
 
                 case "saucelab-chrome":
                     try{
@@ -143,48 +191,59 @@ public class Driver {
                         desiredCapabilities.setBrowserName("chrome");
                         driverPool.set(new RemoteWebDriver(url,desiredCapabilities));
                         driverPool.get().manage().window().maximize();
-                        driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                        driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//                        driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                     }catch (MalformedURLException e){
                         e.printStackTrace();
                     }
                     break;
 
                 case "firefox":
-                    WebDriverManager.firefoxdriver().setup();
+
+//                    WebDriverManager.firefoxdriver().setup();            // After Selenium 4 we don't need this line anymore
                     driverPool.set(new FirefoxDriver());
+
+                    FirefoxOptions optionsFirefox = new FirefoxOptions();
+                    FirefoxProfile firefoxProfile = new FirefoxProfile();
+                    optionsFirefox.setProfile(firefoxProfile);
+                    firefoxProfile.setPreference("intl.accept_languages", "en-GB");
+
                     driverPool.get().manage().window().maximize();
-                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                    driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                     break;
 
                 case "firefox-private":
-                    WebDriverManager.firefoxdriver().setup();
-                    FirefoxOptions optionsFirefox = new FirefoxOptions();
+//                    WebDriverManager.firefoxdriver().setup();            // After Selenium 4 we don't need this line anymore
+                    optionsFirefox = new FirefoxOptions();
                     optionsFirefox.addArguments("-private");  // FirefoxOptions for starting firefox in incognito mode
                     DesiredCapabilities capabilitiesFirefox = new DesiredCapabilities();
                     capabilitiesFirefox.setCapability(FirefoxOptions.FIREFOX_OPTIONS, optionsFirefox);
                     optionsFirefox.merge(capabilitiesFirefox);
                     driverPool.set(new FirefoxDriver(optionsFirefox));
                     driverPool.get().manage().window().maximize();
-                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                    driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                     break;
 
                 case "remote-firefox":
                     try {
-                    // assign your grid server address : 54.89.242.106
-                        String gridAddress = "33.82.116.209"; // put your own Linux grid IP here
+                        // assign your grid server address : 54.89.242.106
+                        String gridAddress = "33.86.220.209"; // put your own Linux grid IP here
                         URL url = new URL("http://"+gridAddress+":4444/wd/hub");
                         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
                         desiredCapabilities.setBrowserName("firefox");
                         driverPool.set(new RemoteWebDriver(url,desiredCapabilities));
                         driverPool.get().manage().window().maximize();
-                        driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                        driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//                        driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
                     }
                     break;
 
                 case "firefox-headless":
-                    WebDriverManager.firefoxdriver().setup();
+//                    WebDriverManager.firefoxdriver().setup();            // After Selenium 4 we don't need this line anymore
                     driverPool.set(new FirefoxDriver(new FirefoxOptions().setHeadless(true)));
                     break;
 
@@ -203,20 +262,22 @@ public class Driver {
                     if (System.getProperty("os.name").toLowerCase().contains("mac")) {
                         throw new WebDriverException("Your operating system does not support the IE browser");
                     }
-                    WebDriverManager.iedriver().setup();
+//                    WebDriverManager.iedriver().setup();            // After Selenium 4 we don't need this line anymore
                     driverPool.set(new InternetExplorerDriver());
                     driverPool.get().manage().window().maximize();
-                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                    driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                     break;
 
                 case "edge":
                     if (System.getProperty("os.name").toLowerCase().contains("mac")) {
                         throw new WebDriverException("Your operating system does not support the EDGE browser");
                     }
-                    WebDriverManager.edgedriver().setup();
+//                    WebDriverManager.edgedriver().setup();            // After Selenium 4 we don't need this line anymore
                     driverPool.set(new EdgeDriver());
                     driverPool.get().manage().window().maximize();
-                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                    driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                     break;
 
                 case "saucelab-edge":
@@ -233,22 +294,34 @@ public class Driver {
                         url = new URL("https://oauth-sdetoscar-844c8:66e7117f-390e-4556-8105-07af96a01f7a@ondemand.eu-central-1.saucelabs.com:443/wd/hub");
                         driverPool.set(new RemoteWebDriver(url,browserOptions));
                         driverPool.get().manage().window().maximize();
-                        driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                        driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//                        driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
                     }
                     break;
 
-//                case "opera":
-////                    WebDriverManager.operadriver().setup();            // After Selenium 4 we don't need this line anymore
-//                    driverPool.set(new OperaDriverManager());
+                case "opera":
+//                    WebDriverManager.operadriver().setup();            // After Selenium 4 we don't need this line anymore
+//                    driverPool.set(new OperaDriver());
 //                    driverPool.get().manage().window().maximize();
 //                    driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 //                    break;
 
+//                case "opera":
+//                    WebDriverManager.operadriver().setup();
+//                    OperaOptions operaOptions = new OperaOptions();
+//                    // You can add specific OperaOptions here if needed
+//                    driverPool.set(new OperaDriver(operaOptions));
+//                    driverPool.get().manage().window().maximize();
+//                    driverPool.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//                    break;
+
+
             }
 
         }
+
 
         return driverPool.get();
 

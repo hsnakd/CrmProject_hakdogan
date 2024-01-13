@@ -1,9 +1,12 @@
 package com.cydeo.pages;
 
 import com.cydeo.utilities.Driver;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.locators.RelativeLocator;
 
 import java.util.List;
 
@@ -168,13 +171,48 @@ public class Locators {
     @FindBy (css =".result-data-large.number.result-data-value.upload-speed")
     public WebElement uploadSpeed;
 
-    //@FindBy(id = "username")
     @FindBy(css = "#username")
     public WebElement username;
+
+
 
 //    @FindBy(xpath = "//td[contains(text(), 'Minute') or contains (text(), 'Hour')]/../td[1])
 //    public List <WebElement> pdfIcons;
 
+    @FindBy(css = "input[id='username']")
+    public WebElement usernameInput;
+
+    @FindBy(css = "input[id='password']")
+    @FindBys({
+            @FindBy(className = "form-group"),
+            @FindBy(xpath = "ancestor::div")})
+    public WebElement passwordInput;
+
+
+
+//    Above
+//    If the email text field element is not easily identifiable for some reason, but the password text field element is, we can locate the text field element using the fact that it is an “input” element “above” the password element.
+    By emailLocator = RelativeLocator.with(By.tagName("input")).above(By.id("password"));
+
+//    Below
+//    If the password text field element is not easily identifiable for some reason, but the email text field element is, we can locate the text field element using the fact that it is an “input” element “below” the email element.
+    By passwordLocator = RelativeLocator.with(By.tagName("input")).below(By.id("email"));
+
+//    Left of
+//    If the cancel button is not easily identifiable for some reason, but the submit button element is, we can locate the cancel button element using the fact that it is a “button” element to the “left of” the submit element.
+    By cancelLocator = RelativeLocator.with(By.tagName("button")).toLeftOf(By.id("submit"));
+
+//    Right of
+//    If the submit button is not easily identifiable for some reason, but the cancel button element is, we can locate the submit button element using the fact that it is a “button” element “to the right of” the cancel element.
+    By submitLocator = RelativeLocator.with(By.tagName("button")).toRightOf(By.id("cancel"));
+
+//    Near
+//    If the relative positioning is not obvious, or it varies based on window size, you can use the near method to identify an element that is at most 50px away from the provided locator. One great use case for this is to work with a form element that doesn’t have an easily constructed locator, but its associated input label element does.
+    By emailLocator2 = RelativeLocator.with(By.tagName("input")).near(By.id("lbl-email"));
+
+//    Chaining relative locators
+//    You can also chain locators if needed. Sometimes the element is most easily identified as being both above/below one element and right/left of another.
+    By submitLocator2 = RelativeLocator.with(By.tagName("button")).below(By.id("email")).toRightOf(By.id("cancel"));
 
 
 

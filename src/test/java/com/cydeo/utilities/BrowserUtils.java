@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.Duration;
 import java.util.*;
+import java.io.IOException;
 
 public class BrowserUtils {
 
@@ -745,13 +746,15 @@ for given duration
      * @param filePath    The local file path of the file to upload.
      */
 
-    public static void uploadFile(WebElement fileInput, String filePath) {
+    public static void uploadFile1(WebElement fileInput, String filePath) {
         WebDriver driver = Driver.getDriver();
         ((RemoteWebElement) fileInput).setFileDetector(new LocalFileDetector());
         fileInput.sendKeys(filePath);
     }
 
-
+    public static void uploadFile(WebElement fileInput, String filePath) {
+        fileInput.sendKeys(filePath);
+    }
 
     /**
      * Add a new browser cookie.
@@ -1238,6 +1241,119 @@ for given duration
         return Driver.getDriver().findElement(By.xpath(xpath));
     }
 
+
+
+
+    /**
+     * Shuts down the Mac immediately.
+     */
+    public static void shutdownMac() {
+        executeCommand("osascript -e 'tell app \"System Events\" to shut down'");
+    }
+
+    /**
+     * Restarts the Mac immediately.
+     */
+    public static void restartMac() {
+        executeCommand("osascript -e 'tell app \"System Events\" to restart'");
+    }
+
+    /**
+     * Shuts down the Mac after a specified delay in seconds.
+     *
+     * @param delaySeconds The delay in seconds before shutdown.
+     */
+
+    public static void shutdownMacTimer(int delaySeconds) {
+        String command = "osascript -e 'tell app \"System Events\" to shut down'";
+        executeCommandWithTimer(command, delaySeconds);
+    }
+
+    public static void restartMacTimer(int delaySeconds) {
+        String command = "osascript -e 'tell app \"System Events\" to restart'";
+        executeCommandWithTimer(command, delaySeconds);
+    }
+
+    public static void shutdownMacTimerMinutes(int delayMinutes) {
+        int delaySeconds = delayMinutes * 60;
+        String command = "osascript -e 'tell app \"System Events\" to shut down'";
+        executeCommandWithTimer(command, delaySeconds);
+    }
+
+    public static void restartMacTimerMinutes(int delayMinutes) {
+        int delaySeconds = delayMinutes * 60;
+        String command = "osascript -e 'tell app \"System Events\" to restart'";
+        executeCommandWithTimer(command, delaySeconds);
+    }
+
+    private static void executeCommandWithTimer(String command, int delaySeconds) {
+        try {
+            if (delaySeconds > 0) {
+                System.out.println("Delaying execution for " + delaySeconds + " seconds");
+
+                for (int i = delaySeconds; i > 0; i--) {
+                    printTimeRemaining(i);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        e.printStackTrace();
+                    }
+                }
+
+                clearConsoleLine();
+                System.out.println();
+            }
+
+            Process process = new ProcessBuilder("/bin/bash", "-c", command)
+                    .redirectErrorStream(true)
+                    .start();
+
+            int exitCode = process.waitFor();
+
+            if (exitCode == 0) {
+                System.out.println("Command executed successfully");
+            } else {
+                System.out.println("Error executing command. Exit code: " + exitCode);
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void printTimeRemaining(int seconds) {
+        int hours = seconds / 3600;
+        int minutes = (seconds % 3600) / 60;
+        int remainingSeconds = seconds % 60;
+
+        if (hours > 0) {
+            System.out.printf("Time remaining: %d Hours - %d Minutes - %d Seconds%n", hours, minutes, remainingSeconds);
+        } else if (minutes > 0) {
+            System.out.printf("Time remaining: %d Minutes - %d Seconds%n", minutes, remainingSeconds);
+        } else {
+            System.out.printf("Time remaining: %d Seconds%n", remainingSeconds);
+        }
+    }
+
+
+    private static void clearConsoleLine() {
+        System.out.print("\r" + " ".repeat(30));
+    }
+
+
+
+
+
+
+    // Helper method to execute terminal commands
+    private static void executeCommand(String command) {
+        try {
+            Process process = Runtime.getRuntime().exec(command);
+            process.waitFor();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
 

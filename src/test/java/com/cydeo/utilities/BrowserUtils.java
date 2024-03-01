@@ -1343,8 +1343,6 @@ for given duration
 
 
 
-
-
     // Helper method to execute terminal commands
     private static void executeCommand(String command) {
         try {

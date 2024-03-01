@@ -32,20 +32,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.Duration;
 import java.util.*;
-import java.io.IOException;
 
 public class BrowserUtils {
 
     /*
-This method will accept int (in seconds) and execute Thread.sleep
-for given duration
+This method will accept int (in seconds) and execute Thread.sleep for a given duration
  */
     public static void sleep(int second){
         second *=1000;
         try {
             Thread.sleep(second);
-        }catch (InterruptedException e ) {
-
+        }catch (InterruptedException ignored) {
         }
     }
 
@@ -90,7 +87,7 @@ for given duration
     }
 
     /**
-     * This method will accept a String as expected value and verify actual URL CONTAINS the value.
+     * This method will accept a String as expected value and verify the actual URL CONTAINS the value.
      * @param expectedInURL
      */
     public static void verifyURLContains(String expectedInURL){
@@ -139,7 +136,7 @@ for given duration
     }
 
     /**
-     * Switches to new window by the exact title. Returns to original window if target title not found
+     * Switches to a new window by the exact title. Returns to an original window if target title not found
      * @param targetTitle
      */
     public static void switchToWindow(String targetTitle) {
@@ -154,7 +151,7 @@ for given duration
     }
 
     /**
-     * Moves the mouse to given element
+     * Moves the mouse to give an element
      *
      * @param element on which to hover
      */
@@ -185,7 +182,7 @@ for given duration
     }
 
     /**
-     * Extracts text from list of elements matching the provided locator into new List<String>
+     * Extracts text from a list of elements matching the provided locator into new List<String>
      *
      * @param locator
      * @return list of strings
@@ -227,7 +224,7 @@ for given duration
     }
 
     /**
-     * Waits for element matching the locator to be visible on the page
+     * Waits for an element matching the locator to be visible on the page
      *
      * @param locator
      * @param timeout
@@ -277,7 +274,7 @@ for given duration
     }
 
     /**
-     * Waits for element matching the locator to be clickable
+     * Waits for an element matching the locator to be clickable
      *
      * @param locator
      * @param timeout
@@ -308,7 +305,7 @@ for given duration
     }
 
     /**
-     * Verifies whether the element matching the provided locator is displayed on page
+     * Verifies whether the element matching the provided locator is displayed on the page
      *
      * @param by
      * @throws AssertionError if the element matching the provided locator is not found or not displayed
@@ -323,7 +320,7 @@ for given duration
     }
 
     /**
-     * Verifies whether the element matching the provided locator is NOT displayed on page
+     * Verifies whether the element matching the provided locator is NOT displayed on the page
      *
      * @param by
      * @throws AssertionError the element matching the provided locator is displayed
@@ -354,7 +351,7 @@ for given duration
 
 
     /**
-     * Waits for element to be not stale
+     * Waits for an element to be not stale
      *
      * @param element
      */
@@ -455,7 +452,7 @@ for given duration
     }
 
     /**
-     * attempts to click on provided element until given time runs out
+     * attempts to click on a provided element until given time runs out
      *
      * @param element
      * @param timeout
@@ -472,7 +469,7 @@ for given duration
     }
 
     /**
-     * executes the given JavaScript command on given web element
+     * executes the given JavaScript command on a given web element
      *
      * @param element
      */
@@ -482,7 +479,7 @@ for given duration
     }
 
     /**
-     * executes the given JavaScript command on given web element
+     * executes the given JavaScript command on a given web element
      *
      * @param command
      */
@@ -494,17 +491,17 @@ for given duration
 
     /**
      * This method will recover in case of exception after unsuccessful the click,
-     * and will try to click on element again.
+     * and will try to click on an element again.
      *
      * @param by
      * @param attempts
      */
     public static void clickWithWait(By by, int attempts) {
         int counter = 0;
-        //click on element as many as you specified in attempts parameter
+        //click on an element as many as you specified in attempts parameter
         while (counter < attempts) {
             try {
-                //selenium must look for element again
+                //selenium must look for an element again
                 clickWithJS(Driver.getDriver().findElement(by));
                 //if click is successful - then break
                 break;
@@ -1148,7 +1145,7 @@ for given duration
         if (folder.exists() && folder.isDirectory()) {
             File[] files = folder.listFiles();
 
-            // Check if files is not null before attempting to iterate
+            // Check if files are not null before attempting to iterate
             if (files != null) {
                 for (File file : files) {
                     file.delete();

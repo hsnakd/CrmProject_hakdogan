@@ -25,21 +25,25 @@ public class CrmProjectTask_Page {
     public WebElement messageBox;
 
     @FindBy(xpath = "//a[@class='js-id-tdp-mem-sel-is-open-form task-form-field-when-filled task-form-field-link add']")
+    public WebElement addMoreButton1;
+
+    @FindBy(xpath = "//a[contains(text(),'Add more')]")
     public WebElement addMoreButton;
 
     @FindBy(xpath = "(//a[contains(text(),'Add more')])[1]")
     public WebElement addMoreButton2;
 
-    @FindBy(xpath = "(//div[text()='helpdesk100@cybertekschool.com'])[2]")
+    @FindBy(xpath = "(//div[text()='helpdesk100@cydeo.com'])[2]")
     public WebElement addPeople;
 
     @FindBy(xpath = "(//*[contains(@id, 'anchor_responsible')])[1]")
     public WebElement addPeopleCheck;
 
-    @FindBy(xpath = "(//div[text()='marketing98@cybertekschool.com'])[2]")
+    @FindBy(xpath = "(//div[text()='marketing98@cydeo" +
+            ".com'])[2]")
     public WebElement addSecondPeople;
 
-    @FindBy(xpath = "//*[normalize-space()='marketing98@cybertekschool.com']")
+    @FindBy(xpath = "//*[normalize-space()='marketing98@cydeo.com']")
     public WebElement addSecondPeopleCheck;
 
 

@@ -10,19 +10,19 @@ Feature: Mac Control with Timer
 
   @ShutdownTimerSecond
   Scenario: ShutdownTimerSecond
-    Given ShutdownTimer 10000 seconds
+    Given ShutdownTimer 10 seconds
 
   @RestartTimerSecond
   Scenario: RestartTimerSecond
-    Given  RestartTimer 100 seconds
+    Given  RestartTimer 10 seconds
 
   @ShutdownTimerMinute
   Scenario: ShutdownTimerMinute
-    Given ShutdownTimer 10 Minutes
+    Given ShutdownTimer 1 Minutes
 
   @RestartTimerMinute
   Scenario: RestartTimerMinute
-    Given  RestartTimer 10 Minutes
+    Given  RestartTimer 1 Minutes
 
 
 

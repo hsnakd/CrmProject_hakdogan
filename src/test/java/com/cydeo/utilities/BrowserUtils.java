@@ -1,5 +1,6 @@
 package com.cydeo.utilities;
 
+import com.cydeo.pages.CaptchaPage;
 import com.cydeo.pages.CrmProjectTask_Page;
 import org.apache.commons.io.FileUtils;
 import org.apache.poi.ss.usermodel.Cell;
@@ -1348,6 +1349,22 @@ This method will accept int (in seconds) and execute Thread.sleep for a given du
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
+    }
+    // Define methods for interacting with elements
+    public static void clickCaptchaCheckbox(WebElement captchaFrame, WebElement captchaCheckbox) {
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(20));
+        wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(captchaFrame));
+        wait.until(ExpectedConditions.elementToBeClickable(captchaCheckbox)).click();
+    }
+
+    // Define methods for interacting with elements
+    public static void clickCaptchaCheckbox() {
+        WebElement captchaFrame = Driver.getDriver().findElement(By.xpath("//iframe[@title='reCAPTCHA']"));
+        WebElement captchaCheckbox = Driver.getDriver().findElement(By.cssSelector(".recaptcha-checkbox-border"));
+
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(20));
+        wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(captchaFrame));
+        wait.until(ExpectedConditions.elementToBeClickable(captchaCheckbox)).click();
     }
 
 }

@@ -12,9 +12,12 @@ import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 
 import static org.junit.Assert.assertTrue;
 
@@ -62,10 +65,9 @@ public class Miaplaza_SD {
         miaplazaPage.parent2PhoneNumber.sendKeys(faker.phoneNumber().cellPhone());
 
         // How did you hear about us? (Select all that apply)
-//        System.out.println("miaplazaPage.searchEngine.getText() = " + miaplazaPage.searchEngine.getText());
-//        miaplazaPage.searchEngine.click();
+        miaplazaPage.searchEngine.click();
 //        assertTrue(miaplazaPage.searchEngine.isSelected());
-//        miaplazaPage.otherSocialMedia.click();
+        miaplazaPage.otherSocialMedia.click();
 //        assertTrue(miaplazaPage.otherSocialMedia.isSelected());
 
         // What is your preferred start date? *
@@ -118,12 +120,12 @@ public class Miaplaza_SD {
         student1Schooling.selectByVisibleText("Private School");
 
         // For each subject area, check off courses this student has already completed and earned credit for.
-//        miaplazaPage.student1Math1.click();
-//        miaplazaPage.student1Math2.click();
-//        miaplazaPage.student1English1.click();
-//        miaplazaPage.student1English2.click();
-//        miaplazaPage.student1Science1.click();
-//        miaplazaPage.student1Science2.click();
+        miaplazaPage.student1Math1.click();
+        miaplazaPage.student1Math2.click();
+        miaplazaPage.student1English1.click();
+        miaplazaPage.student1English2.click();
+        miaplazaPage.student1Science1.click();
+        miaplazaPage.student1Science2.click();
 
         miaplazaPage.student1List.sendKeys(faker.lorem().paragraph());
 
@@ -159,12 +161,12 @@ public class Miaplaza_SD {
         student2Schooling.selectByVisibleText("Homeschool");
 
         // For each subject area, check off courses this student has already completed and earned credit for.
-//        miaplazaPage.student1Math1.click();
-//        miaplazaPage.student1Math2.click();
-//        miaplazaPage.student1English1.click();
-//        miaplazaPage.student1English2.click();
-//        miaplazaPage.student1Science1.click();
-//        miaplazaPage.student1Science2.click();
+        miaplazaPage.student2Math1.click();
+        miaplazaPage.student2Math2.click();
+        miaplazaPage.student2English1.click();
+        miaplazaPage.student2English2.click();
+        miaplazaPage.student2Science1.click();
+        miaplazaPage.student2Science2.click();
 
         miaplazaPage.student2List.sendKeys(faker.lorem().paragraph());
 

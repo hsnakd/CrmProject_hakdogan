@@ -47,9 +47,9 @@ public class Miaplaza_Page {
     @FindBy(xpath = "//*[@id='Dropdown-arialabel']")
     public WebElement secondParentDropdown;
 
-    @FindBy(xpath = "//input[@id='Checkbox_1']")
+    @FindBy(xpath = "(//label[@for='Checkbox_1'])[1]")
     public WebElement searchEngine;
-    @FindBy(xpath = "Checkbox_10")
+    @FindBy(xpath = "(//label[@for='Checkbox_10'])[1]")
     public WebElement otherSocialMedia;
 
     @FindBy(id = "Date-date")
@@ -124,21 +124,37 @@ public class Miaplaza_Page {
     @FindBy(id = "Dropdown9-arialabel")
     public WebElement student2Schooling;
 
-    @FindBy(xpath = "//*[@id='Checkbox1_2']")
+    @FindBy(xpath = "(//label[@for='Checkbox1_2'])[1]")
     public WebElement student1Math1;
-    @FindBy(id = "Checkbox1_5")
+    @FindBy(xpath = "//label[@for='Checkbox1_5']")
     public WebElement student1Math2;
 
-    @FindBy(id = "Checkbox2_1")
+    @FindBy(xpath = "//label[@for='Checkbox2_1']")
     public WebElement student1English1;
-    @FindBy(id = "Checkbox2_2")
+    @FindBy(xpath = "//label[@for='Checkbox2_2']")
     public WebElement student1English2;
 
-    @FindBy(id = "Checkbox3_1")
+    @FindBy(xpath = "//label[@for='Checkbox3_1']")
     public WebElement student1Science1;
-    @FindBy(id = "Checkbox3_4")
+    @FindBy(xpath = "//label[@for='Checkbox3_3']")
     public WebElement student1Science2;
 
+
+
+    @FindBy(xpath = "//label[@for='Checkbox4_1']")
+    public WebElement student2Math1;
+    @FindBy(xpath = "//label[@for='Checkbox4_3']")
+    public WebElement student2Math2;
+
+    @FindBy(xpath = "//label[@for='Checkbox4_3']")
+    public WebElement student2English1;
+    @FindBy(xpath = "//label[@for='Checkbox5_4']")
+    public WebElement student2English2;
+
+    @FindBy(xpath = "//label[@for='Checkbox6_2']")
+    public WebElement student2Science1;
+    @FindBy(xpath = "//label[@for='Checkbox6_3']")
+    public WebElement student2Science2;
 
     @FindBy(id = "MultiLine-arialabel")
     public WebElement student1List;

@@ -28,8 +28,8 @@ public class Miaplaza_SD {
 
     @Given("The user is on the MiAcademy website")
     public void theUserIsOnTheMiAcademyWebsite() {
-//        Driver.getDriver().get("https://miacademy.co/#/");
-        Driver.getDriver().get("https://forms.zohopublic.com/miaplazahelp/form/MOHSInitialApplication/formperma/okCyt4yyq39rZvSBXB9FSjDeek1ilbRVK1iNCK--3K8");
+        Driver.getDriver().get("https://miacademy.co/#/");
+//        Driver.getDriver().get("https://forms.zohopublic.com/miaplazahelp/form/MOHSInitialApplication/formperma/okCyt4yyq39rZvSBXB9FSjDeek1ilbRVK1iNCK--3K8");
     }
 
     @When("The user navigates to the MiaPrep Online High School page")

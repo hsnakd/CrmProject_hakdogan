@@ -68,6 +68,8 @@ public class Miaplaza_Page {
 
     @FindBy(xpath = "(//button[@type='button' and @elname='next'])[1]")
     public WebElement nextButton;
+    @FindBy(xpath = "//ul[3]//li[1]//div[1]//div[2]//div[1]//button[1]")
+    public WebElement nextButton2;
 
     // Student Information
 
@@ -168,6 +170,36 @@ public class Miaplaza_Page {
 
     @FindBy(id = "MultiLine1-arialabel")
     public WebElement student1Describe;
+
+
+
+
+
+
+
+
+    @FindBy(id = "Dropdown12-arialabel")
+    public WebElement requireFinancialAid;
+
+    @FindBy(id = "SingleLine-arialabel")
+    public WebElement householdSize;
+
+    @FindBy(id = "SingleLine1-arialabel")
+    public WebElement householdIncome;
+
+    @FindBy(id = "SingleLine2-arialabel")
+    public WebElement householdCost;
+
+    @FindBy(id = "MultiLine4-arialabel")
+    public WebElement householdBenefit;
+
+    @FindBy(id = "MultiLine5-arialabel")
+    public WebElement householdEvidence;
+
+
+
+    @FindBy(xpath = "//button[.//em[text()='Submit']]")
+    public WebElement submitButton;
 
 
 

@@ -79,10 +79,12 @@ public class Miaplaza_SD {
 
         miaplazaPage.day.click();
 
+        BrowserUtils.sleep(15);
+
         // Click the Next Button
         miaplazaPage.nextButton.click();
 
-        BrowserUtils.sleep(5);
+
 
 
     }
@@ -90,7 +92,7 @@ public class Miaplaza_SD {
     @And("The user proceeds to the Student Information page")
     public void theUserProceedsToTheStudentInformationPage() {
 
-        BrowserUtils.sleep(2);
+//        BrowserUtils.sleep(2);
         Select secondParentDropdown = new Select(miaplazaPage.selectStudentNumber);
         secondParentDropdown.selectByVisibleText("Two");
 
@@ -175,12 +177,23 @@ public class Miaplaza_SD {
 
 //        miaplazaPage.student2Describe.sendKeys(faker.lorem().paragraph());
 
-
         BrowserUtils.sleep(15);
+        miaplazaPage.nextButton2.click();
     }
 
     @And("The user fills in the Student Information with {string} and {string}")
     public void theUserFillsInTheStudentInformationWithAnd(String arg0, String arg1) {
+        Select requireFinancialAid = new Select(miaplazaPage.requireFinancialAid);
+        requireFinancialAid.selectByVisibleText("Yes");
+
+        miaplazaPage.householdSize.sendKeys(String.valueOf(faker.number().numberBetween(2,6)));
+        miaplazaPage.householdIncome.sendKeys(String.valueOf(faker.number().randomDouble(2,(int) 500, (int) 1000)));
+        miaplazaPage.householdCost.sendKeys(String.valueOf(faker.number().randomDouble(2,(int) 250, (int) 400)));
+        miaplazaPage.householdBenefit.sendKeys(faker.lorem().sentence());
+        miaplazaPage.householdEvidence.sendKeys(faker.lorem().paragraph());
+//        miaplazaPage.submitButton.click();
+        BrowserUtils.sleep(15);
+
     }
 
     @And("The user submits the application form")

@@ -1,4 +1,4 @@
-package com.cydeo.pages.pages;
+package com.cydeo.pages.miplaza;
 
 import com.cydeo.utilities.Driver;
 import org.openqa.selenium.WebElement;
@@ -6,72 +6,12 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 
-public class Miaplaza_Page {
+public class MiaplazaStudentInformation_Page {
 
-    public Miaplaza_Page(){
+    public MiaplazaStudentInformation_Page(){
         PageFactory.initElements(Driver.getDriver(), this);
     }
-
-    // Online High School
-    @FindBy(xpath = "//*[.='Online High School']")
-    public WebElement onlineHighSchool;
-
-    // Apply to Our School
-    @FindBy(xpath = "//*[.='Apply to Our School']")
-    public WebElement applyToOurSchool;
-
-
-
-    // Student Information
-
-    @FindBy(xpath = "//input[@name='Name' and @type='text']")
-    public WebElement parent1FirstName;
-    @FindBy(name = "Name1")
-    public WebElement parent2FirstName;
-
-    @FindBy(xpath = "//input[@name='Name' and @elname='Last']")
-    public WebElement parent1LastName;
-    @FindBy(xpath = "//input[@elname='Last' and @name='Name1']")
-    public WebElement parent2LastName;
-
-    @FindBy(id = "Email-arialabel")
-    public WebElement parent1Email;
-    @FindBy(id = "Email1-arialabel")
-    public WebElement parent2Email;
-
-    @FindBy(id = "PhoneNumber")
-    public WebElement parent1PhoneNumber;
-    @FindBy(id = "PhoneNumber1")
-    public WebElement parent2PhoneNumber;
-
-    @FindBy(xpath = "//*[@id='Dropdown-arialabel']")
-    public WebElement secondParentDropdown;
-
-    @FindBy(xpath = "(//label[@for='Checkbox_1'])[1]")
-    public WebElement searchEngine;
-    @FindBy(xpath = "(//label[@for='Checkbox_10'])[1]")
-    public WebElement otherSocialMedia;
-
-    @FindBy(id = "Date-date")
-    public WebElement startDate;
-
-    @FindBy(xpath = "//span[@title='2024']")
-    public WebElement year;
-
-    @FindBy(xpath = "//input[@class='select2-search__field']")
-    public WebElement yearField;
-
-    @FindBy(xpath = "//*[.='Aug']")
-    public WebElement month;
-    @FindBy(xpath = "//*[.='26']")
-    public WebElement day;
-
-    @FindBy(xpath = "(//button[@type='button' and @elname='next'])[1]")
-    public WebElement nextButton;
-    @FindBy(xpath = "//ul[3]//li[1]//div[1]//div[2]//div[1]//button[1]")
-    public WebElement nextButton2;
-
-    // Student Information
+    /** Student Information */
 
     @FindBy(id = "Dropdown1-arialabel")
     public WebElement selectStudentNumber;
@@ -145,10 +85,10 @@ public class Miaplaza_Page {
 
     @FindBy(xpath = "//label[@for='Checkbox4_1']")
     public WebElement student2Math1;
-    @FindBy(xpath = "//label[@for='Checkbox4_3']")
+    @FindBy(xpath = "//label[@for='Checkbox4_4']")
     public WebElement student2Math2;
 
-    @FindBy(xpath = "//label[@for='Checkbox4_3']")
+    @FindBy(xpath = "//label[@for='Checkbox5_3']")
     public WebElement student2English1;
     @FindBy(xpath = "//label[@for='Checkbox5_4']")
     public WebElement student2English2;
@@ -171,40 +111,6 @@ public class Miaplaza_Page {
     @FindBy(id = "MultiLine1-arialabel")
     public WebElement student1Describe;
 
-
-
-
-
-
-
-
-    @FindBy(id = "Dropdown12-arialabel")
-    public WebElement requireFinancialAid;
-
-    @FindBy(id = "SingleLine-arialabel")
-    public WebElement householdSize;
-
-    @FindBy(id = "SingleLine1-arialabel")
-    public WebElement householdIncome;
-
-    @FindBy(id = "SingleLine2-arialabel")
-    public WebElement householdCost;
-
-    @FindBy(id = "MultiLine4-arialabel")
-    public WebElement householdBenefit;
-
-    @FindBy(id = "MultiLine5-arialabel")
-    public WebElement householdEvidence;
-
-
-
-    @FindBy(xpath = "//button[.//em[text()='Submit']]")
-    public WebElement submitButton;
-
-
-
-
-
-
-
+    @FindBy(xpath = "//ul[3]//li[1]//div[1]//div[2]//div[1]//button[1]")
+    public WebElement nextButton2;
 }

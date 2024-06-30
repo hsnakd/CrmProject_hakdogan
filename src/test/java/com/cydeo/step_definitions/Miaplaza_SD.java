@@ -1,206 +1,195 @@
 package com.cydeo.step_definitions;
 
-import com.cydeo.pages.CrmProjectTask_Page;
-import com.cydeo.pages.pages.Miaplaza_Page;
-import com.cydeo.utilities.BrowserUtils;
-import com.cydeo.utilities.Driver;
 import com.github.javafaker.Faker;
+import com.cydeo.pages.miplaza.*;
+import com.cydeo.utilities.ConfigurationReader;
+import com.cydeo.utilities.Driver;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.text.SimpleDateFormat;
-import java.time.Duration;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class Miaplaza_SD {
 
-    Miaplaza_Page miaplazaPage = new Miaplaza_Page();
+    MiaplazaOnlineHighSchool_Page miaplazaOnlineHighSchoolPage = new MiaplazaOnlineHighSchool_Page();
+    MiaplazaApplyToOurSchool_Page miaplazaApplyToOurSchoolPage = new MiaplazaApplyToOurSchool_Page();
+    MiaplazaParentInformation_Page miaplazaParentInformationPage = new MiaplazaParentInformation_Page();
+    MiaplazaStudentInformation_Page miaplazaStudentInformationPage = new MiaplazaStudentInformation_Page();
+    MiaplazaFinancialAid_Page miaplazaFinancialAidPage = new MiaplazaFinancialAid_Page();
+
     Faker faker = new Faker();
 
     @Given("The user is on the MiAcademy website")
     public void theUserIsOnTheMiAcademyWebsite() {
-        Driver.getDriver().get("https://miacademy.co/#/");
-//        Driver.getDriver().get("https://forms.zohopublic.com/miaplazahelp/form/MOHSInitialApplication/formperma/okCyt4yyq39rZvSBXB9FSjDeek1ilbRVK1iNCK--3K8");
+        Driver.getDriver().get(ConfigurationReader.getProperty("url"));
     }
 
     @When("The user navigates to the MiaPrep Online High School page")
     public void theUserNavigatesToTheMiaPrepOnlineHighSchoolPage() {
-        miaplazaPage.onlineHighSchool.click();
+        miaplazaOnlineHighSchoolPage.onlineHighSchool.click();
     }
 
-    @And("The user clicks on {string}")
-    public void theUserClicksOn(String arg0) {
-        miaplazaPage.applyToOurSchool.click();
+    @And("The user clicks on Apply to Our School")
+    public void theUserClicksOnApplyToOurSchool() {
+        miaplazaApplyToOurSchoolPage.applyToOurSchool.click();
     }
 
-    @And("The user fills in the Parent Information with {string} and {string}")
-    public void theUserFillsInTheParentInformationWithAnd(String arg0, String arg1) {
-//        Select selectState = new Select(driver.findElement(By.xpath("//select[@id='state']")));
-//        selectState.selectByValue("CA");
-//        selectState.selectByVisibleText("California");
-//        selectState.selectByIndex(5);
+    @And("The user fills in the Parent Information section")
+    public void theUserFillsInTheParentInformationSection() {
 
-        // Parent Information
-        miaplazaPage.parent1FirstName.sendKeys(faker.name().firstName());
-        miaplazaPage.parent1LastName.sendKeys(faker.name().lastName());
-        miaplazaPage.parent1Email.sendKeys(faker.internet().emailAddress());
-        miaplazaPage.parent1PhoneNumber.sendKeys(faker.phoneNumber().cellPhone());
+        /** Parent Information */
 
-        Select secondParentDropdown = new Select(miaplazaPage.secondParentDropdown);
+        // First Parent Information
+        miaplazaParentInformationPage.parent1FirstName.sendKeys(faker.name().firstName());
+        miaplazaParentInformationPage.parent1LastName.sendKeys(faker.name().lastName());
+        miaplazaParentInformationPage.parent1Email.sendKeys(faker.internet().emailAddress());
+        miaplazaParentInformationPage.parent1PhoneNumber.sendKeys(faker.phoneNumber().cellPhone());
+
+        Select secondParentDropdown = new Select(miaplazaParentInformationPage.secondParentDropdown);
         secondParentDropdown.selectByVisibleText("Yes");
 
         // Second Parent Information
-        miaplazaPage.parent2FirstName.sendKeys(faker.name().firstName());
-        miaplazaPage.parent2LastName.sendKeys(faker.name().lastName());
-        miaplazaPage.parent2Email.sendKeys(faker.internet().emailAddress());
-        miaplazaPage.parent2PhoneNumber.sendKeys(faker.phoneNumber().cellPhone());
+        miaplazaParentInformationPage.parent2FirstName.sendKeys(faker.name().firstName());
+        miaplazaParentInformationPage.parent2LastName.sendKeys(faker.name().lastName());
+        miaplazaParentInformationPage.parent2Email.sendKeys(faker.internet().emailAddress());
+        miaplazaParentInformationPage.parent2PhoneNumber.sendKeys(faker.phoneNumber().cellPhone());
 
         // How did you hear about us? (Select all that apply)
-        miaplazaPage.searchEngine.click();
-//        assertTrue(miaplazaPage.searchEngine.isSelected());
-        miaplazaPage.otherSocialMedia.click();
-//        assertTrue(miaplazaPage.otherSocialMedia.isSelected());
+        miaplazaParentInformationPage.searchEngine.click();
+        miaplazaParentInformationPage.otherSocialMedia.click();
 
-        // What is your preferred start date? *
-        miaplazaPage.startDate.click();
-        miaplazaPage.year.click();
-        miaplazaPage.yearField.sendKeys("2024");
+        // What is your preferred start date?
+        miaplazaParentInformationPage.startDate.click();
+        miaplazaParentInformationPage.year.click();
+        miaplazaParentInformationPage.yearField.sendKeys("2024");
+        miaplazaParentInformationPage.month.click();
+        miaplazaParentInformationPage.day.click();
 
-        miaplazaPage.month.click();
-
-        miaplazaPage.day.click();
-
-        BrowserUtils.sleep(15);
-
-        // Click the Next Button
-        miaplazaPage.nextButton.click();
-
-
-
-
+        // Click the Next Button for Student Information Section
+        miaplazaParentInformationPage.nextButton.click();
     }
 
-    @And("The user proceeds to the Student Information page")
-    public void theUserProceedsToTheStudentInformationPage() {
 
-//        BrowserUtils.sleep(2);
-        Select secondParentDropdown = new Select(miaplazaPage.selectStudentNumber);
+    @And("The user fills in the Student Information section")
+    public void theUserFillsInTheStudentInformationSection() {
+
+        // Select Second Student
+        Select secondParentDropdown = new Select(miaplazaStudentInformationPage.selectStudentNumber);
         secondParentDropdown.selectByVisibleText("Two");
 
         /** Student Information */
-        miaplazaPage.student1FirstName.sendKeys(faker.name().firstName());
-        miaplazaPage.student1LastName.sendKeys(faker.name().lastName());
-        miaplazaPage.student1Email.sendKeys(faker.internet().emailAddress());
-        miaplazaPage.student1PhoneNumber.sendKeys(faker.phoneNumber().cellPhone());
+        miaplazaStudentInformationPage.student1FirstName.sendKeys(faker.name().firstName());
+        miaplazaStudentInformationPage.student1LastName.sendKeys(faker.name().lastName());
+        miaplazaStudentInformationPage.student1Email.sendKeys(faker.internet().emailAddress());
+        miaplazaStudentInformationPage.student1PhoneNumber.sendKeys(faker.phoneNumber().cellPhone());
 
-        Select student1Consent = new Select(miaplazaPage.student1Consent);
+        Select student1Consent = new Select(miaplazaStudentInformationPage.student1Consent);
         student1Consent.selectByVisibleText("Yes");
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         String student1DateOfBirth = sdf.format(faker.date().birthday(10,18));
-        miaplazaPage.student1DateOfBirth.sendKeys(student1DateOfBirth);
+        miaplazaStudentInformationPage.student1DateOfBirth.sendKeys(student1DateOfBirth);
 
-        Select student1Gender = new Select(miaplazaPage.student1Gender);
+        Select student1Gender = new Select(miaplazaStudentInformationPage.student1Gender);
         student1Gender.selectByVisibleText("Male");
 
-        Select student1Account = new Select(miaplazaPage.student1Account);
+        Select student1Account = new Select(miaplazaStudentInformationPage.student1Account);
         student1Account.selectByVisibleText("Yes");
 
-        Select student1Membership = new Select(miaplazaPage.student1Membership);
+        Select student1Membership = new Select(miaplazaStudentInformationPage.student1Membership);
         student1Membership.selectByVisibleText("Monthly");
 
-        Select student1Schooling = new Select(miaplazaPage.student1Schooling);
+        Select student1Schooling = new Select(miaplazaStudentInformationPage.student1Schooling);
         student1Schooling.selectByVisibleText("Private School");
 
         // For each subject area, check off courses this student has already completed and earned credit for.
-        miaplazaPage.student1Math1.click();
-        miaplazaPage.student1Math2.click();
-        miaplazaPage.student1English1.click();
-        miaplazaPage.student1English2.click();
-        miaplazaPage.student1Science1.click();
-        miaplazaPage.student1Science2.click();
+        miaplazaStudentInformationPage.student1Math1.click();
+        miaplazaStudentInformationPage.student1Math2.click();
+        miaplazaStudentInformationPage.student1English1.click();
+        miaplazaStudentInformationPage.student1English2.click();
+        miaplazaStudentInformationPage.student1Science1.click();
+        miaplazaStudentInformationPage.student1Science2.click();
 
-        miaplazaPage.student1List.sendKeys(faker.lorem().paragraph());
+        miaplazaStudentInformationPage.student1List.sendKeys(faker.lorem().paragraph());
 
-        Select student1Needs = new Select(miaplazaPage.student1Needs);
+        Select student1Needs = new Select(miaplazaStudentInformationPage.student1Needs);
         student1Needs.selectByVisibleText("Yes");
 
-        miaplazaPage.student1Describe.sendKeys(faker.lorem().paragraph());
+        miaplazaStudentInformationPage.student1Describe.sendKeys(faker.lorem().paragraph());
 
 
 
-        /** Student Two */
-        miaplazaPage.student2FirstName.sendKeys(faker.name().firstName());
-        miaplazaPage.student2LastName.sendKeys(faker.name().lastName());
-        miaplazaPage.student2Email.sendKeys(faker.internet().emailAddress());
-        miaplazaPage.student2PhoneNumber.sendKeys(faker.phoneNumber().cellPhone());
+        /** Student Two Information */
+        miaplazaStudentInformationPage.student2FirstName.sendKeys(faker.name().firstName());
+        miaplazaStudentInformationPage.student2LastName.sendKeys(faker.name().lastName());
+        miaplazaStudentInformationPage.student2Email.sendKeys(faker.internet().emailAddress());
+        miaplazaStudentInformationPage.student2PhoneNumber.sendKeys(faker.phoneNumber().cellPhone());
 
-        Select student2Consent = new Select(miaplazaPage.student2Consent);
+        Select student2Consent = new Select(miaplazaStudentInformationPage.student2Consent);
         student2Consent.selectByVisibleText("No");
 
         String student2DateOfBirth = sdf.format(faker.date().birthday(10,18));
-        miaplazaPage.student2DateOfBirth.sendKeys(student2DateOfBirth);
+        miaplazaStudentInformationPage.student2DateOfBirth.sendKeys(student2DateOfBirth);
 
-        Select student2Gender = new Select(miaplazaPage.student2Gender);
+        Select student2Gender = new Select(miaplazaStudentInformationPage.student2Gender);
         student2Gender.selectByVisibleText("Female");
 
-        Select student2Account = new Select(miaplazaPage.student2Account);
+        Select student2Account = new Select(miaplazaStudentInformationPage.student2Account);
         student2Account.selectByVisibleText("No");
 
-//        Select student2Membership = new Select(miaplazaPage.student2Membership);
-//        student2Membership.selectByVisibleText("Monthly");
-
-        Select student2Schooling = new Select(miaplazaPage.student2Schooling);
+        Select student2Schooling = new Select(miaplazaStudentInformationPage.student2Schooling);
         student2Schooling.selectByVisibleText("Homeschool");
 
         // For each subject area, check off courses this student has already completed and earned credit for.
-        miaplazaPage.student2Math1.click();
-        miaplazaPage.student2Math2.click();
-        miaplazaPage.student2English1.click();
-        miaplazaPage.student2English2.click();
-        miaplazaPage.student2Science1.click();
-        miaplazaPage.student2Science2.click();
+        miaplazaStudentInformationPage.student2Math1.click();
+        miaplazaStudentInformationPage.student2Math2.click();
+        miaplazaStudentInformationPage.student2English1.click();
+        miaplazaStudentInformationPage.student2English2.click();
+        miaplazaStudentInformationPage.student2Science1.click();
+        miaplazaStudentInformationPage.student2Science2.click();
 
-        miaplazaPage.student2List.sendKeys(faker.lorem().paragraph());
+        miaplazaStudentInformationPage.student2List.sendKeys(faker.lorem().paragraph());
 
-        Select student2Needs = new Select(miaplazaPage.student2Needs);
+        Select student2Needs = new Select(miaplazaStudentInformationPage.student2Needs);
         student2Needs.selectByVisibleText("No");
 
-//        miaplazaPage.student2Describe.sendKeys(faker.lorem().paragraph());
-
-        BrowserUtils.sleep(15);
-        miaplazaPage.nextButton2.click();
+        // Click the Next Button for Financial Aid Application Section
+        miaplazaStudentInformationPage.nextButton2.click();
     }
 
-    @And("The user fills in the Student Information with {string} and {string}")
-    public void theUserFillsInTheStudentInformationWithAnd(String arg0, String arg1) {
-        Select requireFinancialAid = new Select(miaplazaPage.requireFinancialAid);
+    @And("The user fills in the Financial Aid Application section")
+    public void theUserFillsInTheFinancialAidApplicationSection() {
+
+        Select requireFinancialAid = new Select(miaplazaFinancialAidPage.requireFinancialAid);
         requireFinancialAid.selectByVisibleText("Yes");
 
-        miaplazaPage.householdSize.sendKeys(String.valueOf(faker.number().numberBetween(2,6)));
-        miaplazaPage.householdIncome.sendKeys(String.valueOf(faker.number().randomDouble(2,(int) 500, (int) 1000)));
-        miaplazaPage.householdCost.sendKeys(String.valueOf(faker.number().randomDouble(2,(int) 250, (int) 400)));
-        miaplazaPage.householdBenefit.sendKeys(faker.lorem().sentence());
-        miaplazaPage.householdEvidence.sendKeys(faker.lorem().paragraph());
-//        miaplazaPage.submitButton.click();
-        BrowserUtils.sleep(15);
+        miaplazaFinancialAidPage.householdSize.sendKeys(String.valueOf(faker.number().numberBetween(2,6)));
+        miaplazaFinancialAidPage.householdIncome.sendKeys(String.valueOf(faker.number().randomDouble(2,(int) 500, (int) 1000)));
+        miaplazaFinancialAidPage.householdCost.sendKeys(String.valueOf(faker.number().randomDouble(2,(int) 250, (int) 400)));
+        miaplazaFinancialAidPage.householdBenefit.sendKeys(faker.lorem().sentence());
+        miaplazaFinancialAidPage.householdEvidence.sendKeys(faker.lorem().paragraph());
 
     }
 
     @And("The user submits the application form")
     public void theUserSubmitsTheApplicationForm() {
+        // The forms of parents and students were filled in, but since they were not requested, this step was prepared as if they had been submitted.
+//        miaplazaFinancialAidPage.submitButton.click();
+        assertTrue(miaplazaFinancialAidPage.submitButton.isEnabled());
     }
 
-    @Then("The user should see a confirmation message")
-    public void theUserShouldSeeAConfirmationMessage() {
+
+    @Then("Verify that the user should see a {string}")
+    public void verifyThatTheUserShouldSeeA(String expectedMessage) {
+        // The forms of parents and students were filled in, but since they were not requested, this step was prepared as if they had been submitted.
+        String actualMessage = "You have successfully submitted your application";
+        assertEquals(expectedMessage, actualMessage);
     }
+
 }

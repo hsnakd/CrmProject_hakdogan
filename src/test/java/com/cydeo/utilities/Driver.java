@@ -20,7 +20,6 @@ import java.net.URL;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 public class Driver {
 
@@ -242,10 +241,10 @@ public class Driver {
                     }
                     break;
 
-                case "firefox-headless":
-//                    WebDriverManager.firefoxdriver().setup();            // After Selenium 4 we don't need this line anymore
-                    driverPool.set(new FirefoxDriver(new FirefoxOptions().setHeadless(true)));
-                    break;
+//                case "firefox-headless":
+////                    WebDriverManager.firefoxdriver().setup();            // After Selenium 4 we don't need this line anymore
+//                    driverPool.set(new FirefoxDriver(new FirefoxOptions().setHeadless(true)));
+//                    break;
 
                 case "safari":
                     if (System.getProperty("os.name").toLowerCase().contains("windows")) {

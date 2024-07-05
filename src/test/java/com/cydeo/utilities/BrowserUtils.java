@@ -1366,6 +1366,69 @@ This method will accept int (in seconds) and execute Thread.sleep for a given du
         wait.until(ExpectedConditions.elementToBeClickable(captchaCheckbox)).click();
     }
 
+    // Method to get a dynamic locator
+    private By getLocator(String locatorType, String locatorValue) {
+        switch (locatorType.toLowerCase()) {
+            case "id":
+                return By.id(locatorValue);
+            case "name":
+                return By.name(locatorValue);
+            case "xpath":
+                return By.xpath(locatorValue);
+            case "css":
+                return By.cssSelector(locatorValue);
+            case "classname":
+                return By.className(locatorValue);
+            case "tagname":
+                return By.tagName(locatorValue);
+            case "linktext":
+                return By.linkText(locatorValue);
+            case "partiallinktext":
+                return By.partialLinkText(locatorValue);
+            default:
+                throw new IllegalArgumentException("Locator type '" + locatorType + "' not recognized.");
+        }
+    }
+
+    /**
+     * Searches for a web element across all frames in the current WebDriver instance.
+     *
+     * @param driver The WebDriver instance to use for searching.
+     * @param by     The By locator of the web element to search for.
+     * @return The WebElement found in any frame, or null if not found.
+     */
+    public static WebElement searchElementInFrames(WebDriver driver, By by) {
+        // Get all iframe elements
+        List<WebElement> iframes = driver.findElements(By.tagName("iframe"));
+        System.out.println("Total iframes found: " + iframes.size());
+
+        // Iterate through each iframe
+        for (int i = 0; i < iframes.size(); i++) {
+            try {
+                // Switch to each frame
+                driver.switchTo().frame(i);
+
+                // Check for the web element
+                List<WebElement> elements = driver.findElements(by);
+                if (!elements.isEmpty()) {
+                    System.out.println("Element found in iframe number: " + i);
+                    // Return the first matching element
+                    return elements.get(0);
+                }
+            } catch (NoSuchElementException | NoSuchFrameException e) {
+                // Handle exceptions gracefully and continue searching
+                System.out.println("Exception caught while searching iframe " + i + ": " + e.getMessage());
+            } finally {
+                // Switch back to the main page after attempting to find the element
+                driver.switchTo().defaultContent();
+            }
+        }
+
+        // If an element is not found in any frame, return null
+        System.out.println("Element not found in any iframe.");
+        return null;
+    }
+
 }
 
 

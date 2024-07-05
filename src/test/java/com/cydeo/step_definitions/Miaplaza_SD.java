@@ -27,7 +27,7 @@ public class Miaplaza_SD {
 
     @Given("The user is on the MiAcademy website")
     public void theUserIsOnTheMiAcademyWebsite() {
-        Driver.getDriver().get(ConfigurationReader.getProperty("url"));
+        Driver.getDriver().get(ConfigurationReader.getProperty("miaplazaUrl"));
     }
 
     @When("The user navigates to the MiaPrep Online High School page")

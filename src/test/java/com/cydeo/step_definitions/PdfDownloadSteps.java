@@ -4,28 +4,23 @@ import com.cydeo.utilities.Driver;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
+
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.file.Files;
 
 import static org.junit.Assert.assertTrue;
 
 public class PdfDownloadSteps {
-    private WebDriver driver;
     private final String downloadDir = System.getProperty("user.dir") + "/src/test/resources/download";
     private final String pdfUrl = "https://www.hakdogan.com/doc/HASAN_AKDOGAN_RESUME.pdf";
     private final String pdfFileName = "HASAN_AKDOGAN_RESUME.pdf";
 
     @Given("I navigate to the PDF file")
     public void i_navigate_to_the_pdf_file() {
-        // Initialize the WebDriver using Driver class
         Driver.getDriver().navigate().to(pdfUrl);
     }
 
@@ -64,5 +59,4 @@ public class PdfDownloadSteps {
         assertTrue(file.exists());
     }
 
-    // Optional: Add a method to close the WebDriver if needed
 }
